@@ -42,8 +42,33 @@
   --font-mono: var(--font-geist-mono);
 } */
 
+@font-face {
+  font-family: "SF Pro";
+  src:
+    url("/fonts/SF-Pro-Text.woff2") format("woff2"),
+    url("/fonts/SF-Pro-Text.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF Pro";
+  src:
+    url("/fonts/SF-Pro-Display.woff2") format("woff2"),
+    url("/fonts/SF-Pro-Display.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    "SF Pro",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
 }
 
 main {

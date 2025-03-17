@@ -7,7 +7,9 @@ export default function Home() {
     <main className="flex-center screen">
       {/* Hero */}
       <section id="hero">
-        <h1>Welcome to my Next.Js Template 2025</h1>
+        <h1 className="text-4xl font-bold">
+          Welcome to my collection of CSS animations
+        </h1>
       </section>
     </main>
   );
