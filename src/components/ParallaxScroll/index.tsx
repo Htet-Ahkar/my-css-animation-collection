@@ -49,46 +49,44 @@ export default function Index() {
   }, []);
 
   return (
-    <section className="w-full">
-      <div ref={container} className={styles.container}>
-        <div className={styles.body}>
-          <h1 ref={title1}>Parallax</h1>
-          <h1 ref={title2}>Scroll</h1>
+    <div ref={container} className={styles.container}>
+      <div className={styles.body}>
+        <h1 ref={title1}>Parallax</h1>
+        <h1 ref={title2}>Scroll</h1>
 
-          <div className={styles.word}>
-            <p>
-              {word.split("").map((letter, i) => {
-                return (
-                  <span
-                    key={`l_${i}`}
-                    ref={(el) => {
-                      if (el) lettersRef.current[i] = el;
-                    }}
-                  >
-                    {letter}
-                  </span>
-                );
-              })}
-            </p>
-          </div>
-        </div>
-
-        <div className={styles.images}>
-          {images.map((image, i) => {
-            return (
-              <div
-                key={`i_${i}`}
-                ref={(el) => {
-                  if (el) imagesRef.current[i] = el;
-                }}
-                className={styles.imageContainer}
-              >
-                <Image src={image} placeholder="blur" alt="image" fill />
-              </div>
-            );
-          })}
+        <div className={styles.word}>
+          <p>
+            {word.split("").map((letter, i) => {
+              return (
+                <span
+                  key={`l_${i}`}
+                  ref={(el) => {
+                    if (el) lettersRef.current[i] = el;
+                  }}
+                >
+                  {letter}
+                </span>
+              );
+            })}
+          </p>
         </div>
       </div>
-    </section>
+
+      <div className={styles.images}>
+        {images.map((image, i) => {
+          return (
+            <div
+              key={`i_${i}`}
+              ref={(el) => {
+                if (el) imagesRef.current[i] = el;
+              }}
+              className={styles.imageContainer}
+            >
+              <Image src={image} placeholder="blur" alt="image" fill />
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }

@@ -3,7 +3,9 @@ import { ParallaxScroll } from "@/components";
 export default function Page() {
   return (
     <>
-      <ParallaxScroll />
+      <section className="w-full">
+        <ParallaxScroll />
+      </section>
     </>
   );
 }

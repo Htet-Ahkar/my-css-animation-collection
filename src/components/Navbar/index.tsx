@@ -10,6 +10,10 @@ const pages = [
     name: "scroll parallax",
     route: "/scroll-parallax",
   },
+  {
+    name: "zoom parallax",
+    route: "/zoom-parallax",
+  },
 ];
 
 const Index = () => {
