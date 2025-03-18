@@ -14,6 +14,10 @@ const pages = [
     name: "zoom parallax",
     route: "/zoom-parallax",
   },
+  {
+    name: "Apple TV 4K",
+    route: "/appletv-4k",
+  },
 ];
 
 const Index = () => {
@@ -26,7 +30,7 @@ const Index = () => {
   };
 
   return (
-    <header className="bg-neutral text-neutral-content flex-center absolute top-0 w-full p-3">
+    <header className="bg-neutral text-neutral-content flex-center absolute top-0 h-16 w-full p-3">
       <nav>
         {/* Select */}
         <select
