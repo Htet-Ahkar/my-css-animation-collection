@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @plugin "daisyui" {
   themes: frjuggly --default --prefersdark;
 }
@@ -44,18 +45,15 @@
 
 @font-face {
   font-family: "SF Pro";
-  src:
-    url("/fonts/SF-Pro-Text.woff2") format("woff2"),
-    url("/fonts/SF-Pro-Text.woff") format("woff");
+  src: url("/public//fonts//San-Francisco-Pro/SF-Pro-Text.otf") format("otf");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "SF Pro";
-  src:
-    url("/fonts/SF-Pro-Display.woff2") format("woff2"),
-    url("/fonts/SF-Pro-Display.woff") format("woff");
+  src: url("/public/fonts/San-Francisco-Pro/SF-Pro-Display-Regular.otf")
+    format("olf");
   font-weight: bold;
   font-style: normal;
 }
@@ -69,10 +67,12 @@ body {
     Helvetica,
     Arial,
     sans-serif;
+
+  overflow-x: hidden;
 }
 
 main {
-  @apply flex-center;
+  @apply flex-center screen;
 }
 
 @utility flex-center {
