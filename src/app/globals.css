@@ -75,6 +75,13 @@ main {
   @apply flex-center screen;
 }
 
+header {
+  @apply z-30;
+}
+nav {
+  @apply z-30;
+}
+
 @utility flex-center {
   @apply flex items-center justify-center;
 }

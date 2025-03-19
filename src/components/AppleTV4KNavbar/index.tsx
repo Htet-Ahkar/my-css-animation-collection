@@ -1,11 +1,11 @@
 const Index = () => {
   return (
-    <nav className="navbar b text-blac sticky top-0 mt-16 border-b border-b-gray-400 bg-white p-0 text-black">
+    <nav className="navbar glass b text-blac sticky top-0 mt-16 border-b border-b-gray-400 p-0 text-black">
       {/* content */}
       <div className="flex-center w-full justify-between px-10">
         {/* left */}
         {/* title */}
-        <div className="text-3xl font-semibold tracking-wide">
+        <div className="text-3xl font-semibold">
           <a href="">Apple TV 4K</a>
         </div>
 
@@ -15,7 +15,7 @@ const Index = () => {
           <ul className="flex-center space-x-4">
             <li className="relative cursor-pointer transition-all hover:opacity-75">
               Overview
-              <div className="absolute bottom-[20px] w-full border" />
+              <div className="absolute bottom-[-20px] w-full border" />
             </li>
             <li className="cursor-pointer transition-all hover:opacity-75">
               Tech Specs
