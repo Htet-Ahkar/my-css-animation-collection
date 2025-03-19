@@ -1,10 +1,16 @@
 "use client";
 
+import HeroLogo from "@/../public/medias/appleTv-4k/apple_tv_4k_logo_medium_2x.png";
 import StaticFrame from "@/../public/medias/appleTv-4k/hero_staticframe__large_2x.jpg";
 import AppleTv from "@/../public/medias/appleTv-4k/hero_tv_remote_large.png";
 import TV from "@/../public/medias/appleTv-4k/hero_tv_hw_large_2x.jpg";
 import TVShadow from "@/../public/medias/appleTv-4k/hero_tv_shadow_color_large.png";
 import styles from "@/styles/appletv-4k.module.scss";
+import Music from "@/../public/medias/appleTv-4k/logo_apple_music_large.svg";
+import Fitness from "@/../public/medias/appleTv-4k/logo_apple_fitnessplus_large.svg";
+import TvPlus from "@/../public/medias/appleTv-4k/logo_apple_tvplus_large.svg";
+import Arcade from "@/../public/medias/appleTv-4k/logo_apple_arcade_large.svg";
+
 import {
   useScroll,
   useTransform,
@@ -12,7 +18,7 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Index() {
   const container = useRef(null);
@@ -21,6 +27,8 @@ export default function Index() {
   const [isTvStatic, setIsTvStatic] = useState(false);
   const [isControlHidden, setIsControlHidden] = useState(false);
   const [isTvShadowVisible, setIsTvShadowVisible] = useState(false);
+  const [currentVidoFrame, setCurrentVidoFrame] = useState(0);
+  const FPS = 30;
 
   const { scrollYProgress, scrollY } = useScroll({
     target: container,
@@ -29,6 +37,7 @@ export default function Index() {
 
   const scale = useTransform(scrollYProgress, [1, 0], [1, 1.38]);
   const scale1 = useTransform(scrollYProgress, [1, 0], [1, 2]);
+  const opacity = useTransform(scrollYProgress, [0.01, 0], [0, 1]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsControlHidden(latest > 80);
@@ -46,13 +55,47 @@ export default function Index() {
     setIsPlaying(!isPlaying);
   };
 
+  useEffect(() => {
+    let animationFrameId: any;
+    const video = videoRef.current;
+    if (!video) return;
+
+    const updateFrame = () => {
+      const currentFrame = Math.floor(video.currentTime * FPS);
+      if (currentFrame !== currentVidoFrame) {
+        setCurrentVidoFrame(currentFrame);
+      }
+
+      animationFrameId = requestAnimationFrame(updateFrame);
+    };
+
+    updateFrame(); // Start tracking frames
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [currentVidoFrame, FPS]);
+
+  // Define your sequential messages
+  const messages = [
+    { frame: 0, component: <LootTitle /> },
+    { frame: 85, component: <TedTitle /> },
+    { frame: 110, component: <KungFuPandaTitle /> },
+    { frame: 155, component: <ApesTitle /> },
+    { frame: 190, component: <HelloKittyTitle /> },
+    { frame: 230, component: <MusicTitle /> },
+    { frame: 265, component: <FittnessTitle /> },
+  ];
+
+  // Find the latest message based on timeMarker
+  const currentMessage = messages.findLast(
+    ({ frame }) => currentVidoFrame >= frame,
+  );
+
   return (
     <div ref={container} className={styles.container}>
       {/* play/pause btn */}
       <div
         className={`fixed top-[90vh] z-50 flex w-full justify-end px-10 transition-all duration-500 ${isControlHidden ? "hidden opacity-0" : "block opacity-100"}`}
       >
-        <label className="swap swap-rotate cursor-pointer rounded-full bg-gray-400 p-3 opacity-55">
+        <label className="swap swap-rotate cursor-pointer rounded-full bg-gray-400 p-2 opacity-55">
           {/* this hidden checkbox controls the state */}
           <input
             type="checkbox"
@@ -88,10 +131,50 @@ export default function Index() {
 
       <div className={styles.sticky}>
         {/* tv set */}
-        <motion.div style={{ scale }} className={styles.el}>
+        <motion.div
+          style={{
+            scale,
+          }}
+          className={styles.el}
+        >
           <div className={`${styles.contentContainer} `}>
+            {/* Hero Container */}
+            <motion.div
+              className="flex-center absolute bottom-0 left-0 z-30 h-1/2 w-full flex-col"
+              style={{
+                opacity,
+              }}
+            >
+              {/* Hero logo */}
+              <div className="relative h-1/9 w-1/9">
+                <Image
+                  className="object-cover"
+                  alt="HeroLogo"
+                  src={HeroLogo}
+                  placeholder="blur"
+                  quality={100}
+                  fill
+                  sizes="100%"
+                />
+              </div>
+              {/* Hero text */}
+              <div>
+                <h1 className="text-center text-6xl leading-14 font-semibold text-white">
+                  The Apple experience. <br />
+                  Cienematic in every sense.
+                </h1>
+              </div>
+
+              {/* TODO */}
+              {/* vido title */}
+              <div className="mt-[6vh] text-white">
+                {currentMessage && currentMessage.component}
+              </div>
+            </motion.div>
+
+            {/* TV Container */}
             <div className="bg-base-200 relative h-full w-full overflow-hidden">
-              {/* TV Container */}
+              {/* TV Video */}
               <div className="relative top-1/2 left-1/2 z-20 h-[96%] w-[98%] -translate-x-1/2 -translate-y-1/2 transform bg-white">
                 <video
                   ref={videoRef}
@@ -119,7 +202,7 @@ export default function Index() {
                 />
               </div>
 
-              {/* TV  */}
+              {/* TV Static */}
               <Image
                 className="absolute z-10 overflow-visible"
                 alt="TV"
@@ -166,6 +249,167 @@ export default function Index() {
             </div>
           </div>
         </motion.div>
+      </div>
+    </div>
+  );
+}
+
+function LootTitle() {
+  return (
+    <div className="flex-center space-x-4">
+      {/* logo */}
+      <div className="relative h-[4vh] w-[4vw]">
+        <Image
+          className="object-contain"
+          alt="TvPlus"
+          src={TvPlus}
+          quality={100}
+          fill
+          sizes="100%"
+        />
+      </div>
+
+      {/* divider */}
+      <div className="h-[3vh] border border-white" />
+
+      {/* Title */}
+      <div className="text-lg">
+        <a href="#">Loot</a>
+      </div>
+    </div>
+  );
+}
+
+function TedTitle() {
+  return (
+    <div className="flex-center space-x-4">
+      {/* logo */}
+      <div className="relative h-[4vh] w-[4vw]">
+        <Image
+          className="object-contain"
+          alt="TvPlus"
+          src={TvPlus}
+          quality={100}
+          fill
+          sizes="100%"
+        />
+      </div>
+
+      {/* divider */}
+      <div className="h-[3vh] border border-white" />
+
+      {/* Title */}
+      <div className="text-lg">
+        <a href="#">Ted Lasso</a>
+      </div>
+    </div>
+  );
+}
+
+function KungFuPandaTitle() {
+  return (
+    <div className="flex-center space-x-2">
+      {/* logo */}
+      <div className="text-lg italic">
+        <a href="#">Kung Fu Panda 4</a>
+      </div>
+
+      {/* Title */}
+      <div className="text-lg">
+        <p>is available to buy or rent on the Apple TV app.</p>
+      </div>
+    </div>
+  );
+}
+
+function ApesTitle() {
+  return (
+    <div className="flex-center space-x-2">
+      {/* logo */}
+      <div className="text-lg italic">
+        <a href="#"> Kingdom of the Planet of the Apes</a>
+      </div>
+
+      {/* Title */}
+      <div className="text-lg">
+        <p>is available to buy or rent on the Apple TV app.</p>
+      </div>
+    </div>
+  );
+}
+
+function HelloKittyTitle() {
+  return (
+    <div className="flex-center space-x-4">
+      {/* logo */}
+      <div className="relative h-[4vh] w-[4vw]">
+        <Image
+          className="object-contain"
+          alt="Arcade"
+          src={Arcade}
+          quality={100}
+          fill
+          sizes="100%"
+        />
+      </div>
+
+      {/* divider */}
+      <div className="h-[3vh] border border-white" />
+
+      {/* Title */}
+      <div className="text-lg">
+        <a href="#">Hello Kitty Island Adventure</a>
+      </div>
+    </div>
+  );
+}
+
+function FittnessTitle() {
+  return (
+    <div className="flex-center space-x-4">
+      {/* logo */}
+      <div className="relative h-[4vh] w-[4vw]">
+        <Image
+          className="object-contain"
+          alt="Fitness"
+          src={Fitness}
+          quality={100}
+          fill
+          sizes="100%"
+        />
+      </div>
+
+      {/* divider */}
+      <div className="h-[3vh] border border-white" />
+
+      {/* Title */}
+      <div className="text-lg">
+        <a href="#">HIIT with Bakari</a>
+      </div>
+    </div>
+  );
+}
+function MusicTitle() {
+  return (
+    <div className="flex-center space-x-4">
+      {/* logo */}
+      <div className="relative h-[4vh] w-[4vw]">
+        <Image
+          className="object-contain"
+          alt="Music"
+          src={Music}
+          quality={100}
+          fill
+          sizes="100%"
+        />
+      </div>
+
+      {/* divider */}
+      <div className="h-[3vh] border border-white" />
+
+      {/* Title */}
+      <div className="text-lg">
+        <a href="#">Peggy Gou</a>
       </div>
     </div>
   );
