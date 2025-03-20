@@ -137,7 +137,7 @@ export default function Index() {
           }}
           className={styles.el}
         >
-          <div className={`${styles.contentContainer} `}>
+          <div className={`${styles.contentContainer} !aspect-video`}>
             {/* Hero Container */}
             <motion.div
               className="flex-center absolute bottom-0 left-0 z-30 h-1/2 w-full flex-col"
@@ -148,7 +148,7 @@ export default function Index() {
               {/* Hero logo */}
               <div className="relative h-1/9 w-1/9">
                 <Image
-                  className="object-cover"
+                  className="object-contain"
                   alt="HeroLogo"
                   src={HeroLogo}
                   placeholder="blur"
@@ -238,7 +238,7 @@ export default function Index() {
             {/* Apple tv  */}
             <div className="absolute top-[2vh] left-1/2 z-10 !h-[20%] !w-[20%] -translate-x-1/2">
               <Image
-                className="object-cover"
+                className="overflow-visible object-cover"
                 alt="AppleTv"
                 src={AppleTv}
                 placeholder="blur"
@@ -342,7 +342,7 @@ function HelloKittyTitle() {
   return (
     <div className="flex-center space-x-4">
       {/* logo */}
-      <div className="relative h-[4vh] w-[4vw]">
+      <div className="relative h-[5vh] w-[5vw]">
         <Image
           className="object-contain"
           alt="Arcade"
@@ -364,36 +364,11 @@ function HelloKittyTitle() {
   );
 }
 
-function FittnessTitle() {
-  return (
-    <div className="flex-center space-x-4">
-      {/* logo */}
-      <div className="relative h-[4vh] w-[4vw]">
-        <Image
-          className="object-contain"
-          alt="Fitness"
-          src={Fitness}
-          quality={100}
-          fill
-          sizes="100%"
-        />
-      </div>
-
-      {/* divider */}
-      <div className="h-[3vh] border border-white" />
-
-      {/* Title */}
-      <div className="text-lg">
-        <a href="#">HIIT with Bakari</a>
-      </div>
-    </div>
-  );
-}
 function MusicTitle() {
   return (
     <div className="flex-center space-x-4">
       {/* logo */}
-      <div className="relative h-[4vh] w-[4vw]">
+      <div className="relative h-[6vh] w-[6vw]">
         <Image
           className="object-contain"
           alt="Music"
@@ -410,6 +385,32 @@ function MusicTitle() {
       {/* Title */}
       <div className="text-lg">
         <a href="#">Peggy Gou</a>
+      </div>
+    </div>
+  );
+}
+
+function FittnessTitle() {
+  return (
+    <div className="flex-center space-x-4">
+      {/* logo */}
+      <div className="relative h-[6vh] w-[6vw]">
+        <Image
+          className="object-contain"
+          alt="Fitness"
+          src={Fitness}
+          quality={100}
+          fill
+          sizes="100%"
+        />
+      </div>
+
+      {/* divider */}
+      <div className="h-[3vh] border border-white" />
+
+      {/* Title */}
+      <div className="text-lg">
+        <a href="#">HIIT with Bakari</a>
       </div>
     </div>
   );
