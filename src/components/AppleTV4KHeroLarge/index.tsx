@@ -217,7 +217,7 @@ export default function Index() {
 
             {/* TV Shadow */}
             <div
-              className={`absolute left-[-17vh] h-[10vh] w-[170vh] transition-all duration-1000 ${isTvShadowVisible ? "opacity-100" : "opacity-0"}`}
+              className={`absolute left-[-15vh] h-[10vh] w-[155vh] transition-all duration-1000 ${isTvShadowVisible ? "opacity-100" : "opacity-0"}`}
             >
               <Image
                 className="object-fill"
