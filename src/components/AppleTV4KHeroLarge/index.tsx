@@ -35,9 +35,10 @@ export default function Index() {
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [1, 0], [1, 1.38]);
-  const scale1 = useTransform(scrollYProgress, [1, 0], [1, 2]);
-  const opacity = useTransform(scrollYProgress, [0.01, 0], [0, 1]);
+  const tvScale = useTransform(scrollYProgress, [1, 0], [1, 1.5]);
+  const appleTvscale = useTransform(scrollYProgress, [1, 0], [1, 2]);
+  const heroOpacity = useTransform(scrollYProgress, [0.01, 0], [0, 1]);
+  const tvShadowOpacity = useTransform(scrollYProgress, [0.6, 0.2], [1, 0]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsControlHidden(latest > 80);
@@ -133,7 +134,7 @@ export default function Index() {
         {/* tv set */}
         <motion.div
           style={{
-            scale,
+            scale: tvScale,
           }}
           className={styles.el}
         >
@@ -142,7 +143,7 @@ export default function Index() {
             <motion.div
               className="flex-center absolute bottom-0 left-0 z-30 h-1/2 w-full flex-col"
               style={{
-                opacity,
+                opacity: heroOpacity,
               }}
             >
               {/* Hero logo */}
@@ -216,8 +217,11 @@ export default function Index() {
             </div>
 
             {/* TV Shadow */}
-            <div
-              className={`absolute left-[-15vh] h-[10vh] w-[155vh] transition-all duration-1000 ${isTvShadowVisible ? "opacity-100" : "opacity-0"}`}
+            <motion.div
+              className={`absolute left-[-15vh] h-[10vh] w-[155vh]`}
+              style={{
+                opacity: tvShadowOpacity,
+              }}
             >
               <Image
                 className="object-fill"
@@ -228,12 +232,12 @@ export default function Index() {
                 fill
                 sizes="100%"
               />
-            </div>
+            </motion.div>
           </div>
         </motion.div>
 
         {/* apple tv */}
-        <motion.div style={{ scale: scale1 }} className={styles.el}>
+        <motion.div style={{ scale: appleTvscale }} className={styles.el}>
           <div className={`${styles.contentContainer}`}>
             {/* Apple tv  */}
             <div className="absolute top-[2vh] left-1/2 z-10 !h-[20%] !w-[20%] -translate-x-1/2">
