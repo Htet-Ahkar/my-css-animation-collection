@@ -15,8 +15,12 @@ const pages = [
     route: "/zoom-parallax",
   },
   {
-    name: "Apple TV 4K",
-    route: "/appletv-4k",
+    name: "Apple TV 4K Hero Section",
+    route: "/appletv-4k-hero",
+  },
+  {
+    name: "Split Vignette",
+    route: "/split-vignettek",
   },
 ];
 
