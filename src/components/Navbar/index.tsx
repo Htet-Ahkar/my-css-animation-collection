@@ -22,6 +22,10 @@ const pages = [
     name: "Split Vignette",
     route: "/split-vignettek",
   },
+  {
+    name: "Apple tv rooms",
+    route: "/apple-tv-rooms",
+  },
 ];
 
 const Index = () => {

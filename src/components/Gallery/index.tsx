@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/styles/gallery.module.scss";
+import styles from "./style.module.scss";
 import Image from "next/image";
 import { motion } from "framer-motion";
 

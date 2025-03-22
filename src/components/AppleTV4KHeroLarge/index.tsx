@@ -26,7 +26,6 @@ export default function Index() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isTvStatic, setIsTvStatic] = useState(false);
   const [isControlHidden, setIsControlHidden] = useState(false);
-  const [isTvShadowVisible, setIsTvShadowVisible] = useState(false);
   const [currentVidoFrame, setCurrentVidoFrame] = useState(0);
   const FPS = 30;
 
@@ -43,7 +42,6 @@ export default function Index() {
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsControlHidden(latest > 80);
     setIsTvStatic(latest > 150);
-    setIsTvShadowVisible(latest > 850);
   });
 
   const handleCheckboxChange = () => {
