@@ -5,11 +5,11 @@ import StaticFrame from "@/../public/medias/appleTv-4k/hero_staticframe__large_2
 import AppleTv from "@/../public/medias/appleTv-4k/hero_tv_remote_large.png";
 import TV from "@/../public/medias/appleTv-4k/hero_tv_hw_large_2x.jpg";
 import TVShadow from "@/../public/medias/appleTv-4k/hero_tv_shadow_color_large.png";
-import styles from "@/styles/appletv-4k.module.scss";
 import Music from "@/../public/medias/appleTv-4k/logo_apple_music_large.svg";
 import Fitness from "@/../public/medias/appleTv-4k/logo_apple_fitnessplus_large.svg";
 import TvPlus from "@/../public/medias/appleTv-4k/logo_apple_tvplus_large.svg";
 import Arcade from "@/../public/medias/appleTv-4k/logo_apple_arcade_large.svg";
+import styles from "./style.module.scss";
 
 import {
   useScroll,
