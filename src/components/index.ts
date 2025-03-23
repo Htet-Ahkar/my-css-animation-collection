@@ -1,3 +1,4 @@
+export * from "./SVGs";
 export { default as Navbar } from "./Navbar";
 export { default as ParallaxScroll } from "./ParallaxScroll";
 export { default as ZoomParallax } from "./ZoomParallax";

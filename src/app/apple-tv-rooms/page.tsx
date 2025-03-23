@@ -1,26 +1,36 @@
+"use client";
 import Image from "next/image";
 import styles from "./style.module.scss";
-import { Room } from "@/components";
+import TvWithSahdow from "@/../public/medias/appleTv-rooms/tv_hardware_large.png";
+
+import { PauseIcon, PlayIcon, Room } from "@/components";
+import { useRef, useState } from "react";
+import {
+  AnimatePresence,
+  useMotionValueEvent,
+  useScroll,
+  motion,
+} from "framer-motion";
 
 const rooms = [
-  {
-    name: "Apple Tv App",
-    handle: "apple-tv-app",
-    room: <TvPlusApp />,
-    content: <ImageContent handle={"apple-tv-app"} />,
-  },
-  {
-    name: "Apple Tv Plus",
-    handle: "tv-plus",
-    room: <TvPlus />,
-    content: <VidoContent handle={"tv-plus"} />,
-  },
-  {
-    name: "Apple Tv Insight",
-    handle: "apple-tv-insight",
-    room: <TvPlusInsight />,
-    content: <ImageContent handle={"apple-tv-insight"} />,
-  },
+  // {
+  //   name: "Apple Tv App",
+  //   handle: "apple-tv-app",
+  //   room: <TvPlusApp />,
+  //   content: <ImageContent handle={"apple-tv-app"} />,
+  // },
+  // {
+  //   name: "Apple Tv Plus",
+  //   handle: "tv-plus",
+  //   room: <TvPlus />,
+  //   content: <VidoContent handle={"tv-plus"} />,
+  // },
+  // {
+  //   name: "Apple Tv Insight",
+  //   handle: "apple-tv-insight",
+  //   room: <TvPlusInsight />,
+  //   content: <ImageContent handle={"apple-tv-insight"} />,
+  // },
   {
     name: "Fitness Plus",
     handle: "fitness-plus",
@@ -60,6 +70,7 @@ export default function Page() {
       <section className="bg-base-300 h-[80vh]" />
 
       <section className="flex-center relative w-full flex-col">
+        <AppleTvPlus />
         {rooms.map(({ handle, room, content }, i) => (
           <Room handle={handle} room={room} content={content} key={i} />
         ))}
@@ -129,5 +140,152 @@ function ImageContent({ handle }: { handle: string }) {
       fill
       sizes="100%"
     />
+  );
+}
+
+function AppleTvPlus() {
+  const secondRoomRef = useRef(null);
+  const firstRoomRef = useRef(null);
+  const [firstRoomProgress, setFirstRoomProgress] = useState(0);
+  const [secondRoomProgress, setSecondRoomProgress] = useState(0);
+
+  const { scrollYProgress: firstRoomScrollY } = useScroll({
+    target: firstRoomRef,
+    offset: ["start end", "end start"],
+  });
+  const { scrollYProgress: secondRoomScrollY } = useScroll({
+    target: secondRoomRef,
+    offset: ["start end", "end start"],
+  });
+
+  useMotionValueEvent(firstRoomScrollY, "change", (latest) => {
+    setFirstRoomProgress(latest * 100);
+  });
+
+  useMotionValueEvent(secondRoomScrollY, "change", (latest) => {
+    setSecondRoomProgress(latest * 100);
+  });
+
+  const calculateTvLocation = ({ firstRoomProgress }: any) => {
+    let result = 0;
+
+    if (firstRoomProgress > 0 && firstRoomProgress <= 50) {
+      result = Math.max(0, 100 - firstRoomProgress * 2);
+    }
+
+    return result;
+  };
+
+  const CurrentContent = ({ firstRoomProgress, secondRoomProgress }: any) => {
+    if (secondRoomProgress >= 60) {
+      return (
+        <motion.div
+          className="absolute z-10 size-full p-3"
+          key="video"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Content */}
+          <ImageContent handle={"apple-tv-Insight"} />
+        </motion.div>
+      );
+    }
+
+    if (firstRoomProgress >= 60) {
+      return (
+        <motion.div
+          className="absolute z-10 size-full p-3"
+          key="video"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Content */}
+          <VidoContent handle={"tv-plus"} />
+        </motion.div>
+      );
+    }
+
+    return (
+      <motion.div
+        className="absolute z-10 size-full p-3"
+        key="image"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <ImageContent handle={"apple-tv-app"} />
+      </motion.div>
+    );
+  };
+
+  return (
+    <>
+      <div className="vignette-container relative">
+        {/* tv */}
+
+        <div
+          className="fixed top-0 -right-1/4 z-1 aspect-video h-screen translate-x-[50%]"
+          style={{
+            transform: `translate(0, ${calculateTvLocation({ firstRoomProgress })}vh)`,
+            transition: "transform ease-in-out", // Smooth transition
+          }}
+        >
+          {/* controls */}
+          <div className="absolute bottom-[12.5rem] left-[33rem] z-1">
+            <label className="swap swap-rotate cursor-pointer rounded-full bg-gray-400 p-0.5 opacity-55">
+              {/* this hidden checkbox controls the state */}
+              <input
+                type="checkbox"
+                // checked={isPlaying}
+                // onChange={handleCheckboxChange}
+              />
+              {/* pause icon */}
+              <PauseIcon />
+
+              {/* play icon */}
+              <PlayIcon />
+            </label>
+          </div>
+
+          <div className="absolute top-[50vh] aspect-video h-[32rem] -translate-y-1/2">
+            {/* Content Container */}
+
+            <AnimatePresence mode="wait">
+              {CurrentContent({ firstRoomProgress, secondRoomProgress })}
+            </AnimatePresence>
+
+            {/* Tv Hardware */}
+            <div className="w-fulll relative h-[115%]">
+              <Image
+                className="overflow-visible object-fill"
+                alt="TvWithSahdow"
+                src={TvWithSahdow}
+                placeholder="blur"
+                quality={100}
+                fill
+                sizes="100%"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* rooms */}
+        <div ref={firstRoomRef}>
+          <TvPlus />
+          {/* <TvPlusApp /> */}
+        </div>
+        <div ref={secondRoomRef}>
+          <TvPlus />
+        </div>
+        <div>
+          <TvPlusInsight />
+        </div>
+      </div>
+    </>
   );
 }
