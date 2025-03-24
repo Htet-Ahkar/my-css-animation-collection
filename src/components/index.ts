@@ -6,4 +6,4 @@ export { default as AppleTV4KNavbar } from "./AppleTV4KNavbar";
 export { default as AppleTV4KHeroLarge } from "./AppleTV4KHeroLarge";
 export { default as Gallery } from "./Gallery";
 export { default as Description } from "./Description";
-export { default as Room } from "./Room";
+export { default as Rooms } from "./Rooms";
