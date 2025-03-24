@@ -70,7 +70,7 @@ export default function Page() {
       <section className="bg-base-300 h-[80vh]" />
 
       <section className="flex-center relative w-full flex-col">
-        <AppleTvPlus />
+        <AppleTvPlusRooms />
         {rooms.map(({ handle, room, content }, i) => (
           <Room handle={handle} room={room} content={content} key={i} />
         ))}
@@ -143,7 +143,7 @@ function ImageContent({ handle }: { handle: string }) {
   );
 }
 
-function AppleTvPlus() {
+function AppleTvPlusRooms() {
   const secondRoomRef = useRef(null);
   const firstRoomRef = useRef(null);
   const [firstRoomProgress, setFirstRoomProgress] = useState(0);
@@ -229,7 +229,7 @@ function AppleTvPlus() {
         {/* tv */}
 
         <div
-          className="fixed top-0 -right-1/4 z-1 aspect-video h-screen translate-x-[50%]"
+          className="fixed top-0 -right-1/4 left-1/2 z-1 aspect-video h-screen"
           style={{
             transform: `translate(0, ${calculateTvLocation({ firstRoomProgress })}vh)`,
             transition: "transform ease-in-out", // Smooth transition
@@ -260,7 +260,7 @@ function AppleTvPlus() {
             </AnimatePresence>
 
             {/* Tv Hardware */}
-            <div className="w-fulll relative h-[115%]">
+            <div className="w-fulll room-tv-hardware-size relative">
               <Image
                 className="overflow-visible object-fill"
                 alt="TvWithSahdow"

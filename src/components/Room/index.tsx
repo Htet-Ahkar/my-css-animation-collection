@@ -75,7 +75,7 @@ export default function Index({
         {/* tv */}
 
         <div
-          className="fixed top-0 -right-1/4 z-1 aspect-video h-screen translate-x-[50%]"
+          className="fixed top-0 -right-1/4 left-1/2 z-1 aspect-video h-screen"
           style={{
             transform: `translate(0, ${calculateTvLocation({ firstRoomProgress, lastRoomProgress })}vh)`,
             transition: "transform ease-in-out", // Smooth transition
@@ -106,7 +106,7 @@ export default function Index({
             </div>
 
             {/* Tv Hardware */}
-            <div className="w-fulll relative h-[115%]">
+            <div className="w-fulll room-tv-hardware-size relative">
               <Image
                 className="overflow-visible object-fill"
                 alt="TvWithSahdow"

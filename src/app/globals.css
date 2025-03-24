@@ -93,3 +93,11 @@ nav {
 @utility vignette-container {
   clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
 }
+
+@utility container-lg {
+  @apply m-auto w-[980px];
+}
+
+@utility room-tv-hardware-size {
+  @apply h-[115%] w-[109%];
+}
