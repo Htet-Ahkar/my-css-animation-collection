@@ -19,3 +19,39 @@ export function PlayIcon() {
     </svg>
   );
 }
+
+export function ChevronRight() {
+  return (
+    <svg className="swap-off h-10 w-10 fill-current p-2" viewBox="0 0 24 24">
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path d="M9.343 18.657a1 1 0 0 1-.707-1.707l4.95-4.95-4.95-4.95a1 1 0 0 1 1.414-1.414l5.657 5.657a1 1 0 0 1 0 1.414l-5.657 5.657a1 1 0 0 1-.707.293z"></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function ArrowUpRight() {
+  return (
+    <svg className="swap-off h-10 w-10 fill-current p-2" viewBox="0 0 24 24">
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path
+          d="M7 17L17 7M17 7H8M17 7V16"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+      </g>
+    </svg>
+  );
+}

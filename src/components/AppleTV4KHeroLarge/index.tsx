@@ -72,7 +72,7 @@ export default function Index() {
     return () => cancelAnimationFrame(animationFrameId);
   }, [currentVidoFrame, FPS]);
 
-  // Define your sequential messages
+  // Sequential messages
   const messages = [
     { frame: 0, component: <LootTitle /> },
     { frame: 85, component: <TedTitle /> },

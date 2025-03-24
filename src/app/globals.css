@@ -95,7 +95,7 @@ nav {
 }
 
 @utility container-lg {
-  @apply m-auto w-[980px];
+  @apply m-auto h-full w-[980px];
 }
 
 @utility room-tv-hardware-size {
