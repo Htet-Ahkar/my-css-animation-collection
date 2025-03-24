@@ -5,11 +5,11 @@ import StaticFrame from "@/../public/medias/appleTv-4k/hero_staticframe__large_2
 import AppleTv from "@/../public/medias/appleTv-4k/hero_tv_remote_large.png";
 import TV from "@/../public/medias/appleTv-4k/hero_tv_hw_large_2x.jpg";
 import TVShadow from "@/../public/medias/appleTv-4k/hero_tv_shadow_color_large.png";
-import styles from "@/styles/appletv-4k.module.scss";
 import Music from "@/../public/medias/appleTv-4k/logo_apple_music_large.svg";
 import Fitness from "@/../public/medias/appleTv-4k/logo_apple_fitnessplus_large.svg";
 import TvPlus from "@/../public/medias/appleTv-4k/logo_apple_tvplus_large.svg";
 import Arcade from "@/../public/medias/appleTv-4k/logo_apple_arcade_large.svg";
+import styles from "./style.module.scss";
 
 import {
   useScroll,
@@ -26,7 +26,6 @@ export default function Index() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isTvStatic, setIsTvStatic] = useState(false);
   const [isControlHidden, setIsControlHidden] = useState(false);
-  const [isTvShadowVisible, setIsTvShadowVisible] = useState(false);
   const [currentVidoFrame, setCurrentVidoFrame] = useState(0);
   const FPS = 30;
 
@@ -35,14 +34,14 @@ export default function Index() {
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [1, 0], [1, 1.38]);
-  const scale1 = useTransform(scrollYProgress, [1, 0], [1, 2]);
-  const opacity = useTransform(scrollYProgress, [0.01, 0], [0, 1]);
+  const tvScale = useTransform(scrollYProgress, [1, 0], [1, 1.5]);
+  const appleTvscale = useTransform(scrollYProgress, [1, 0], [1, 2]);
+  const heroOpacity = useTransform(scrollYProgress, [0.01, 0], [0, 1]);
+  const tvShadowOpacity = useTransform(scrollYProgress, [0.6, 0.2], [1, 0]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsControlHidden(latest > 80);
     setIsTvStatic(latest > 150);
-    setIsTvShadowVisible(latest > 850);
   });
 
   const handleCheckboxChange = () => {
@@ -73,7 +72,7 @@ export default function Index() {
     return () => cancelAnimationFrame(animationFrameId);
   }, [currentVidoFrame, FPS]);
 
-  // Define your sequential messages
+  // Sequential messages
   const messages = [
     { frame: 0, component: <LootTitle /> },
     { frame: 85, component: <TedTitle /> },
@@ -133,22 +132,22 @@ export default function Index() {
         {/* tv set */}
         <motion.div
           style={{
-            scale,
+            scale: tvScale,
           }}
           className={styles.el}
         >
-          <div className={`${styles.contentContainer} `}>
+          <div className={`${styles.contentContainer} !aspect-video`}>
             {/* Hero Container */}
             <motion.div
               className="flex-center absolute bottom-0 left-0 z-30 h-1/2 w-full flex-col"
               style={{
-                opacity,
+                opacity: heroOpacity,
               }}
             >
               {/* Hero logo */}
               <div className="relative h-1/9 w-1/9">
                 <Image
-                  className="object-cover"
+                  className="object-contain"
                   alt="HeroLogo"
                   src={HeroLogo}
                   placeholder="blur"
@@ -216,8 +215,11 @@ export default function Index() {
             </div>
 
             {/* TV Shadow */}
-            <div
-              className={`absolute left-[-17vh] h-[10vh] w-[170vh] transition-all duration-1000 ${isTvShadowVisible ? "opacity-100" : "opacity-0"}`}
+            <motion.div
+              className={`absolute left-[-15vh] h-[10vh] w-[155vh]`}
+              style={{
+                opacity: tvShadowOpacity,
+              }}
             >
               <Image
                 className="object-fill"
@@ -228,17 +230,17 @@ export default function Index() {
                 fill
                 sizes="100%"
               />
-            </div>
+            </motion.div>
           </div>
         </motion.div>
 
         {/* apple tv */}
-        <motion.div style={{ scale: scale1 }} className={styles.el}>
+        <motion.div style={{ scale: appleTvscale }} className={styles.el}>
           <div className={`${styles.contentContainer}`}>
             {/* Apple tv  */}
             <div className="absolute top-[2vh] left-1/2 z-10 !h-[20%] !w-[20%] -translate-x-1/2">
               <Image
-                className="object-cover"
+                className="overflow-visible object-cover"
                 alt="AppleTv"
                 src={AppleTv}
                 placeholder="blur"
@@ -342,7 +344,7 @@ function HelloKittyTitle() {
   return (
     <div className="flex-center space-x-4">
       {/* logo */}
-      <div className="relative h-[4vh] w-[4vw]">
+      <div className="relative h-[5vh] w-[5vw]">
         <Image
           className="object-contain"
           alt="Arcade"
@@ -364,36 +366,11 @@ function HelloKittyTitle() {
   );
 }
 
-function FittnessTitle() {
-  return (
-    <div className="flex-center space-x-4">
-      {/* logo */}
-      <div className="relative h-[4vh] w-[4vw]">
-        <Image
-          className="object-contain"
-          alt="Fitness"
-          src={Fitness}
-          quality={100}
-          fill
-          sizes="100%"
-        />
-      </div>
-
-      {/* divider */}
-      <div className="h-[3vh] border border-white" />
-
-      {/* Title */}
-      <div className="text-lg">
-        <a href="#">HIIT with Bakari</a>
-      </div>
-    </div>
-  );
-}
 function MusicTitle() {
   return (
     <div className="flex-center space-x-4">
       {/* logo */}
-      <div className="relative h-[4vh] w-[4vw]">
+      <div className="relative h-[6vh] w-[6vw]">
         <Image
           className="object-contain"
           alt="Music"
@@ -410,6 +387,32 @@ function MusicTitle() {
       {/* Title */}
       <div className="text-lg">
         <a href="#">Peggy Gou</a>
+      </div>
+    </div>
+  );
+}
+
+function FittnessTitle() {
+  return (
+    <div className="flex-center space-x-4">
+      {/* logo */}
+      <div className="relative h-[6vh] w-[6vw]">
+        <Image
+          className="object-contain"
+          alt="Fitness"
+          src={Fitness}
+          quality={100}
+          fill
+          sizes="100%"
+        />
+      </div>
+
+      {/* divider */}
+      <div className="h-[3vh] border border-white" />
+
+      {/* Title */}
+      <div className="text-lg">
+        <a href="#">HIIT with Bakari</a>
       </div>
     </div>
   );

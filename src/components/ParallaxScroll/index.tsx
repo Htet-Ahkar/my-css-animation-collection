@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/styles/parallax-scroll.module.scss";
+import styles from "./style.module.scss";
 import Picture1 from "@/../public/medias/scroll-parallax/1.jpg";
 import Picture2 from "@/../public/medias/scroll-parallax/2.jpg";
 import Picture3 from "@/../public/medias/scroll-parallax/3.jpg";

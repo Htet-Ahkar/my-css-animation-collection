@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/styles/zoom-parallax.module.scss";
+import styles from "./style.module.scss";
 import Picture1 from "@/../public/medias/zoom-parallax/1.jpeg";
 import Picture2 from "@/../public/medias/zoom-parallax/2.jpeg";
 import Picture3 from "@/../public/medias/zoom-parallax/3.jpg";
