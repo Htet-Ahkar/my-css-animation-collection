@@ -229,33 +229,24 @@ function AppleTvPlusRooms({ children }: any) {
       );
     }
 
-    if (firstRoomProgress >= 60) {
+    if (firstRoomProgress <= 60) {
       return (
         <motion.div
-          key="video"
+          key="image"
           className="size-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <VidoContent handle={"tv-plus"} />
+          <ImageContent handle={"apple-tv-app"} />
         </motion.div>
       );
     }
+  };
 
-    return (
-      <motion.div
-        key="image"
-        className="size-full"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <ImageContent handle={"apple-tv-app"} />
-      </motion.div>
-    );
+  const isVideoVisible = () => {
+    return firstRoomProgress >= 60 && secondRoomProgress <= 60;
   };
 
   return (
@@ -272,15 +263,21 @@ function AppleTvPlusRooms({ children }: any) {
         >
           {/* controls */}
 
-          {firstRoomProgress >= 60 && secondRoomProgress <= 60
-            ? children
-            : null}
+          {isVideoVisible() ? children : null}
 
           {/* content */}
           <TvHardware>
             <AnimatePresence mode="wait">
               {CurrentContent({ firstRoomProgress, secondRoomProgress })}
             </AnimatePresence>
+
+            <div
+              className={`absolute top-1/2 h-[95.5%] w-[97.5%] -translate-y-1/2 transition-all duration-1000 ${
+                isVideoVisible() ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <VidoContent handle={"tv-plus"} />
+            </div>
           </TvHardware>
         </div>
 
