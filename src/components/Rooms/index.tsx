@@ -11,12 +11,7 @@ import PhotoLogo from "@/../public/medias/appleTv-rooms/photo/photos_app_large_2
 
 import { ArrowUpRight, ChevronRight, PauseIcon, PlayIcon } from "@/components";
 import { useEffect, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  useMotionValueEvent,
-  useScroll,
-  motion,
-} from "framer-motion";
+import { useMotionValueEvent, useScroll } from "framer-motion";
 
 const rooms = [
   {
@@ -213,38 +208,6 @@ function AppleTvPlusRooms({ children }: any) {
     return result;
   };
 
-  const CurrentContent = ({ firstRoomProgress, secondRoomProgress }: any) => {
-    if (secondRoomProgress >= 60) {
-      return (
-        <motion.div
-          key="image2"
-          className="size-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ImageContent handle={"apple-tv-Insight"} />
-        </motion.div>
-      );
-    }
-
-    if (firstRoomProgress <= 60) {
-      return (
-        <motion.div
-          key="image"
-          className="size-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ImageContent handle={"apple-tv-app"} />
-        </motion.div>
-      );
-    }
-  };
-
   const isVideoVisible = () => {
     return firstRoomProgress >= 60 && secondRoomProgress <= 60;
   };
@@ -267,9 +230,14 @@ function AppleTvPlusRooms({ children }: any) {
 
           {/* content */}
           <TvHardware>
-            <AnimatePresence mode="wait">
-              {CurrentContent({ firstRoomProgress, secondRoomProgress })}
-            </AnimatePresence>
+            {/* ! this thing do not work try another way */}
+            <div
+              className={`absolute top-1/2 h-[95.5%] w-[97.5%] -translate-y-1/2 transition-all duration-1000 ${
+                firstRoomProgress <= 60 ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <ImageContent handle={"apple-tv-app"} />
+            </div>
 
             <div
               className={`absolute top-1/2 h-[95.5%] w-[97.5%] -translate-y-1/2 transition-all duration-1000 ${
@@ -277,6 +245,14 @@ function AppleTvPlusRooms({ children }: any) {
               }`}
             >
               <VidoContent handle={"tv-plus"} />
+            </div>
+
+            <div
+              className={`absolute top-1/2 h-[95.5%] w-[97.5%] -translate-y-1/2 transition-all duration-1000 ${
+                secondRoomProgress >= 60 ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <ImageContent handle={"apple-tv-Insight"} />
             </div>
           </TvHardware>
         </div>
