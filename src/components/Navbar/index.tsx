@@ -26,6 +26,14 @@ const pages = [
     name: "Apple tv rooms",
     route: "/apple-tv-rooms",
   },
+  {
+    name: "Apple tv rooms",
+    route: "/apple-tv-rooms",
+  },
+  {
+    name: "Apple Tv Plus Router",
+    route: "/apple-tv-plus-router",
+  },
 ];
 
 const Index = () => {

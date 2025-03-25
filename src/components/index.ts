@@ -7,3 +7,4 @@ export { default as AppleTV4KHeroLarge } from "./AppleTV4KHeroLarge";
 export { default as Gallery } from "./Gallery";
 export { default as Description } from "./Description";
 export { default as Rooms } from "./Rooms";
+export { default as TvPlusRouter } from "./TvPlusRouter";
