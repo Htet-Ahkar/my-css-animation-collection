@@ -25,12 +25,12 @@ const SLOW_DURATION = 250;
 
 export default function Index() {
   const [duration, setDuration] = useState(FAST_DURATION);
-  let [ref, { width }] = useMeasure();
+  let [containerRef, { width }] = useMeasure();
 
   const xTranslation = useMotionValue(0);
 
   const [mustFinish, setMustFinish] = useState(false);
-  const [rerender, setRerender] = useState(false);
+  const [rerender, setRerender] = useState(false); // Actually I don't think we need this. We can track mustFinish dependency.
 
   useEffect(() => {
     let controls;
@@ -60,10 +60,10 @@ export default function Index() {
 
   return (
     <main className="py-8">
-      <motion.div
+      <motion.ul
         className="absolute left-0 flex gap-4"
         style={{ x: xTranslation }}
-        ref={ref}
+        ref={containerRef}
         onHoverStart={() => {
           setMustFinish(true);
           setDuration(SLOW_DURATION);
@@ -76,7 +76,7 @@ export default function Index() {
         {[...images, ...images].map((item, idx) => (
           <Card image={`${item}`} key={idx} />
         ))}
-      </motion.div>
+      </motion.ul>
     </main>
   );
 }
@@ -88,7 +88,7 @@ const Card = ({ image }: any) => {
   const [showOverlay, setShowOverlay] = useState(false);
 
   return (
-    <motion.div
+    <motion.li
       className="relative flex h-[200px] min-w-[200px] items-center justify-center overflow-hidden rounded-xl bg-slate-400"
       key={image}
       onHoverStart={() => setShowOverlay(true)}
@@ -126,6 +126,6 @@ const Card = ({ image }: any) => {
         )}
       </AnimatePresence>
       <Image src={image} alt={image} fill style={{ objectFit: "cover" }} />
-    </motion.div>
+    </motion.li>
   );
 };

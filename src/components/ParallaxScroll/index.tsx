@@ -82,7 +82,7 @@ export default function Index() {
               }}
               className={styles.imageContainer}
             >
-              <Image src={image} placeholder="blur" alt="image" fill />
+              <Image src={image} placeholder="blur" alt="image" />
             </div>
           );
         })}
