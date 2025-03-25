@@ -86,6 +86,10 @@ nav {
   @apply flex items-center justify-center;
 }
 
+@utility flex-col-center {
+  @apply flex flex-col items-center justify-center;
+}
+
 @utility screen {
   @apply min-h-screen min-w-screen;
 }

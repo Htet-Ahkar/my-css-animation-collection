@@ -23,8 +23,8 @@ const pages = [
     route: "/split-vignettek",
   },
   {
-    name: "Apple tv rooms",
-    route: "/apple-tv-rooms",
+    name: "Text Parallax",
+    route: "/text-parallax",
   },
   {
     name: "Apple tv rooms",
