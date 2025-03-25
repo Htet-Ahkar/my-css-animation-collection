@@ -27,6 +27,10 @@ const pages = [
     route: "/text-parallax",
   },
   {
+    name: "Framer Motion Infinite Carousel",
+    route: "/framer-motion-infinite-carousel",
+  },
+  {
     name: "Apple tv rooms",
     route: "/apple-tv-rooms",
   },
