@@ -31,6 +31,10 @@ const pages = [
     route: "/framer-motion-infinite-carousel",
   },
   {
+    name: "IPhone 3D",
+    route: "/iphone-3d",
+  },
+  {
     name: "Apple tv rooms",
     route: "/apple-tv-rooms",
   },

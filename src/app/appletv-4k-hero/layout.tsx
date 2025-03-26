@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       {/* Nav */}
       <AppleTV4KNavbar />
-      <main className="screen flex-center flex-col">{children}</main>
+      <main className="screen flex-col-center">{children}</main>
     </>
   );
 }

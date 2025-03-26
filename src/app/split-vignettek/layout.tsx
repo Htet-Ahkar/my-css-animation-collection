@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <main className="screen flex-center flex-col">{children}</main>
+      <main className="screen flex-col-center">{children}</main>
     </>
   );
 }
