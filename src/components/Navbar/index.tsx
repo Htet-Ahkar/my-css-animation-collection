@@ -35,8 +35,8 @@ const pages = [
     route: "/apple-tv-rooms",
   },
   {
-    name: "Apple Tv Plus Router",
-    route: "/apple-tv-plus-router",
+    name: "Apple Tv Plus River",
+    route: "/apple-tv-plus-river",
   },
 ];
 
