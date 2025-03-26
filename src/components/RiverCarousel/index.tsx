@@ -7,12 +7,14 @@ type PropsType = {
   children: any;
   FAST_DURATION: number;
   SLOW_DURATION: number;
+  isPaused: boolean;
 };
 
 export default function RiverCarousel({
   children,
   FAST_DURATION,
   SLOW_DURATION,
+  isPaused,
 }: PropsType) {
   const [duration, setDuration] = useState(FAST_DURATION);
   let [containerRef, { width }] = useMeasure();
@@ -45,8 +47,13 @@ export default function RiverCarousel({
       });
     }
 
+    if (isPaused) {
+      controls.stop();
+      setMustFinish(true);
+    }
+
     return controls?.stop;
-  }, [rerender, xTranslation, duration, width]);
+  }, [rerender, xTranslation, duration, width, isPaused]);
 
   return (
     <motion.ul

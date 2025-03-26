@@ -2,8 +2,13 @@
 import TvPlusLogo from "@/../public/medias/appleTv-4k/logo_apple_tvplus_large.svg";
 import Image from "next/image";
 import { imageUrls } from "./constants";
-import { ArrowUpRight, ChevronRight } from "../SVGs";
-import { RiverCarousel } from "@/components";
+import {
+  RiverCarousel,
+  ArrowUpRight,
+  ChevronRight,
+  PauseIcon,
+  PlayIcon,
+} from "@/components";
 
 const FAST_RIVER_DURATION = 110;
 const SLOW_RIVER_DURATION = 125;
@@ -13,6 +18,8 @@ export default function Index() {
   const urls = [...imageUrls];
   const mid = Math.floor(urls.length / 2);
   const [slowRiver, fastRiver] = [urls.slice(mid), urls.slice(0, mid)];
+
+  const [isPaused, setIsPaused] = useState(false);
 
   return (
     <>
@@ -70,11 +77,31 @@ export default function Index() {
         </div>
 
         {/* River */}
-        <div className="w-full space-y-3 pt-12.5 pb-3">
+        <div className="w-full space-y-3 pb-3">
+          {/* Control */}
+          <div className="flex flex-row-reverse px-2">
+            <label className="swap swap-rotate scale-75 cursor-pointer rounded-full border-2 border-white fill-white p-0.5">
+              {/* this hidden checkbox controls the state */}
+              <input
+                type="checkbox"
+                checked={isPaused}
+                onChange={() => {
+                  setIsPaused(!isPaused);
+                }}
+              />
+              {/* pause icon */}
+              <PauseIcon />
+
+              {/* play icon */}
+              <PlayIcon />
+            </label>
+          </div>
+
           <div className="relative aspect-video h-34">
             <RiverCarousel
               FAST_DURATION={FAST_RIVER_DURATION}
               SLOW_DURATION={HOVER_DURATION}
+              isPaused={isPaused}
             >
               {[...fastRiver, ...fastRiver].map((item, idx) => (
                 <Card image={`${item}`} key={idx} />
@@ -86,6 +113,7 @@ export default function Index() {
             <RiverCarousel
               FAST_DURATION={SLOW_RIVER_DURATION}
               SLOW_DURATION={HOVER_DURATION}
+              isPaused={isPaused}
             >
               {[...slowRiver, ...slowRiver].map((item, idx) => (
                 <Card image={`${item}`} key={idx} />
