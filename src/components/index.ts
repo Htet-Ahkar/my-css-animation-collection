@@ -11,3 +11,8 @@ export { default as Gallery } from "./Gallery";
 export { default as Description } from "./Description";
 export { default as Rooms } from "./Rooms";
 export { default as TvPlusRiver } from "./TvPlusRiver";
+
+// 3D Iphone
+export { default as IPhoneModel } from "./IPhoneModel";
+export { default as ModelView } from "./ModelView";
+export { default as IPhone15 } from "./IPhone15";
