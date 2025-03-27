@@ -35,6 +35,10 @@ const pages = [
     route: "/iphone-3d",
   },
   {
+    name: "Siri Remote",
+    route: "/siri-remote",
+  },
+  {
     name: "Apple tv rooms",
     route: "/apple-tv-rooms",
   },

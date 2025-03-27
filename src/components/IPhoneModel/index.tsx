@@ -1,10 +1,7 @@
 "use client";
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ModelView } from "@/components";
-
+import { IPhone15, ModelView } from "@/components";
 import { yellowImg } from "@/utils";
-
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
@@ -36,14 +33,14 @@ export default function Index() {
 
   useEffect(() => {
     if (size === "large") {
-      animateWithGsapTimeline(tl, small, smallRotation, "#view1", "#view2", {
+      animateWithGsapTimeline(tl, small, smallRotation, "#small", "#large", {
         transform: "translateX(-100%)",
         duration: 2,
       });
     }
 
     if (size === "small") {
-      animateWithGsapTimeline(tl, large, largeRotation, "#view2", "#view1", {
+      animateWithGsapTimeline(tl, large, largeRotation, "#large", "#small", {
         transform: "translateX(0)",
         duration: 2,
       });
@@ -57,81 +54,83 @@ export default function Index() {
   }, []);
 
   return (
-    <section className="p-5">
-      <div className="screen-max-width">
-        <div className="flex flex-col items-center">
-          <div className="relative h-[75vh] w-full overflow-hidden md:h-[90vh]">
-            <ModelView
-              index={1}
-              groupRef={small}
-              gsapType="view1"
-              controlRef={cameraControlSmall}
-              setRotationState={setSmallRotation}
-              item={model}
-              size={size}
-            />
+    <div className="screen-max-width p-10">
+      <div className="flex-col-center">
+        <div className="relative h-[75vh] w-full overflow-hidden md:h-[90vh]">
+          <ModelView
+            index={1}
+            name="small"
+            position={0}
+            groupRef={small}
+            controlRef={cameraControlSmall}
+            setRotationState={setSmallRotation}
+            OrbitControlsEnable={true}
+          >
+            <IPhone15 scale={[15, 15, 15]} item={model} size={size} />
+          </ModelView>
 
-            <ModelView
-              index={2}
-              groupRef={large}
-              gsapType="view2"
-              controlRef={cameraControlLarge}
-              setRotationState={setLargeRotation}
-              item={model}
-              size={size}
-            />
+          <ModelView
+            index={2}
+            name="large"
+            position={-100}
+            groupRef={large}
+            controlRef={cameraControlLarge}
+            setRotationState={setLargeRotation}
+            OrbitControlsEnable={true}
+          >
+            <IPhone15 scale={[17, 17, 17]} item={model} size={size} />
+          </ModelView>
 
-            <Canvas
-              className="h-full w-full"
-              style={{
-                position: "fixed",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                overflow: "hidden",
-              }}
-              eventSource={eventSource!}
-            >
-              <View.Port />
-            </Canvas>
-          </div>
+          <Canvas
+            className="h-full w-full"
+            style={{
+              position: "fixed",
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              overflow: "hidden",
+            }}
+            eventSource={eventSource!}
+          >
+            <View.Port />
+          </Canvas>
+        </div>
 
-          {/* Controls */}
-          <div className="mx-auto w-full">
-            <p className="mb-5 text-center text-sm font-light">{model.title}</p>
+        {/* Controls */}
+        <div className="mx-auto w-full">
+          <p className="mb-5 text-center text-sm font-light">{model.title}</p>
 
-            <div className="flex-center">
-              <ul className="color-container">
-                {models.map((item, i) => (
-                  <li
-                    key={i}
-                    className="mx-2 h-6 w-6 cursor-pointer rounded-full"
-                    style={{ backgroundColor: item.color[0] }}
-                    onClick={() => setModel(item)}
-                  />
-                ))}
-              </ul>
+          <div className="flex-center">
+            <ul className="color-container">
+              {models.map((item, i) => (
+                <li
+                  key={i}
+                  className="mx-2 h-6 w-6 cursor-pointer rounded-full"
+                  style={{ backgroundColor: item.color[0] }}
+                  onClick={() => setModel(item)}
+                />
+              ))}
+            </ul>
 
-              <button className="size-btn-container">
-                {sizes.map(({ label, value }) => (
-                  <span
-                    key={label}
-                    className="size-btn"
-                    style={{
-                      backgroundColor: size === value ? "white" : "transparent",
-                      color: size === value ? "black" : "white",
-                    }}
-                    onClick={() => setSize(value)}
-                  >
-                    {label}
-                  </span>
-                ))}
-              </button>
-            </div>
+            <button className="size-btn-container">
+              {sizes.map(({ label, value }) => (
+                <span
+                  key={label}
+                  className="size-btn"
+                  style={{
+                    backgroundColor: size === value ? "white" : "transparent",
+                    color: size === value ? "black" : "white",
+                  }}
+                  onClick={() => setSize(value)}
+                >
+                  {label}
+                </span>
+              ))}
+            </button>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

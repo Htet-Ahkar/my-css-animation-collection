@@ -102,6 +102,10 @@ canvas {
   @apply flex flex-col items-center justify-center;
 }
 
+@utility fixed-center {
+  @apply fixed top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2;
+}
+
 @utility screen {
   @apply min-h-screen min-w-screen;
 }

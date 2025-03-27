@@ -7,23 +7,34 @@ import {
 } from "@react-three/drei";
 
 import * as THREE from "three";
-import { IPhone15 } from "@/components";
 import { Suspense } from "react";
 
+type PropsType = {
+  children: any;
+  index: number;
+  position: number;
+  name: string;
+  groupRef: any;
+  controlRef: any;
+  setRotationState: any;
+  OrbitControlsEnable: boolean;
+};
+
 export default function Index({
+  children,
   index,
+  position,
+  name,
   groupRef,
-  gsapType,
   controlRef,
   setRotationState,
-  size,
-  item,
-}: any) {
+  OrbitControlsEnable,
+}: PropsType) {
   return (
     <View
       index={index}
-      id={gsapType}
-      className={`absolute h-full w-full ${index === 2 ? "right-[-100%]" : ""}`}
+      id={name}
+      className={`absolute h-full w-full right-[${position}%] `}
     >
       {/* Ambient Light */}
       <ambientLight intensity={0.3} />
@@ -32,28 +43,20 @@ export default function Index({
 
       <Lights />
 
-      <OrbitControls
-        makeDefault
-        ref={controlRef}
-        enableZoom={false}
-        enablePan={false}
-        rotateSpeed={0.4}
-        target={new THREE.Vector3(0, 0, 0)}
-        onEnd={() => setRotationState(controlRef.current.getAzimuthalAngle())}
-      />
+      {OrbitControlsEnable && (
+        <OrbitControls
+          makeDefault
+          ref={controlRef}
+          enableZoom={false}
+          enablePan={false}
+          rotateSpeed={0.4}
+          target={new THREE.Vector3(0, 0, 0)}
+          onEnd={() => setRotationState(controlRef.current.getAzimuthalAngle())}
+        />
+      )}
 
-      <group
-        ref={groupRef}
-        name={`${index === 1} ? 'small' : 'large`}
-        position={[0, 0, 0]}
-      >
-        <Suspense fallback={<Loader />}>
-          <IPhone15
-            scale={index === 1 ? [15, 15, 15] : [17, 17, 17]}
-            item={item}
-            size={size}
-          />
-        </Suspense>
+      <group ref={groupRef} name={name} position={[0, 0, 0]}>
+        <Suspense fallback={<Loader />}>{children}</Suspense>
       </group>
     </View>
   );

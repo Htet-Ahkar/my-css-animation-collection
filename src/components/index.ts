@@ -16,3 +16,8 @@ export { default as TvPlusRiver } from "./TvPlusRiver";
 export { default as IPhoneModel } from "./IPhoneModel";
 export { default as ModelView } from "./ModelView";
 export { default as IPhone15 } from "./IPhone15";
+
+// 3D Siri Remote
+export { default as SiriRemoteModel } from "./SiriRemoteModel";
+// export { default as ModelView } from "./ModelView";
+// export { default as IPhone15 } from "./IPhone15";
