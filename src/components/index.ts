@@ -19,5 +19,4 @@ export { default as IPhone15 } from "./IPhone15";
 
 // 3D Siri Remote
 export { default as SiriRemoteModel } from "./SiriRemoteModel";
-// export { default as ModelView } from "./ModelView";
-// export { default as IPhone15 } from "./IPhone15";
+export { default as SiriRemote } from "./SiriRemote";

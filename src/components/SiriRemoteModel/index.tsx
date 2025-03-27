@@ -2,7 +2,7 @@
 import * as THREE from "three";
 import gsap from "gsap";
 import { Canvas } from "@react-three/fiber";
-import { IPhone15, ModelView } from "..";
+import { IPhone15, ModelView, SiriRemote } from "..";
 import { View } from "@react-three/drei";
 import { useEffect, useRef, useState } from "react";
 import { yellowImg } from "@/utils";
@@ -26,9 +26,9 @@ const calculateRotation = ({
   to,
 }: calculateRotationType) => {
   return progress < start
-    ? 0
+    ? from
     : progress > end
-      ? -0.7
+      ? to
       : gsap.utils.mapRange(start, end, from, to, progress);
 };
 
@@ -66,12 +66,12 @@ export default function Index() {
           start: 0.45,
           end: 0.55,
           from: 0,
-          to: -0.7,
+          to: -0.5692,
         });
 
         gsap.to(modelRef.current.rotation, {
           y: rotationY,
-          duration: 0.1, // Smooth updates
+          duration: 0.2, // Smooth updates
           ease: "linear",
         });
       },
@@ -83,40 +83,118 @@ export default function Index() {
     };
   }, []);
 
+  // useEffect(() => {
+  //   console.log(rotation);
+  // }, [rotation]);
+
   return (
     <>
-      <div ref={containerRef} className="screen-max-width h-[300vh] p-10">
-        <div className="flex-col-center">
-          <div className="fixed-center h-[85vh] w-full overflow-hidden">
-            <ModelView
-              index={1}
-              name="small"
-              position={0}
-              groupRef={modelRef}
-              controlRef={cameraControlSmall}
-              setRotationState={setRotation}
-              OrbitControlsEnable={true}
-            >
-              <IPhone15 scale={[15, 15, 15]} item={model} size="small" />
-            </ModelView>
+      <div
+        ref={containerRef}
+        className="screen-max-width relative h-[300vh] p-10"
+      >
+        <div className="fixed-center h-screen w-1/2 -translate-y-0">
+          <ModelView
+            index={1}
+            name="small"
+            position={""}
+            groupRef={modelRef}
+            controlRef={cameraControlSmall}
+            setRotationState={setRotation}
+            OrbitControlsEnable={false}
+            Lights={Lights}
+          >
+            {/* <IPhone15 scale={[15, 15, 15]} item={model} size="small" /> */}
+            <SiriRemote scale={[4, 4, 4]} item={model} size="normal" />
+          </ModelView>
 
-            <Canvas
-              className="h-full w-full"
-              style={{
-                position: "fixed",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                overflow: "hidden",
-              }}
-              eventSource={eventSource!}
-            >
-              <View.Port />
-            </Canvas>
-          </div>
+          <Canvas
+            style={{
+              position: "fixed",
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              overflow: "hidden",
+            }}
+            eventSource={eventSource!}
+          >
+            <View.Port />
+          </Canvas>
         </div>
       </div>
     </>
   );
 }
+
+// Lights
+import { Environment, Lightformer } from "@react-three/drei";
+const Lights = () => {
+  return (
+    // group different lights and lightformers. We can use group to organize lights, cameras, meshes, and other objects in the scene.
+    <group name="lights">
+      {/**
+       * @description Environment is used to create a background environment for the scene
+       * https://github.com/pmndrs/drei?tab=readme-ov-file#environment
+       */}
+      <Environment resolution={256}>
+        <group>
+          {/**
+           * @description Lightformer used to create custom lights with various shapes and properties in a 3D scene.
+           * https://github.com/pmndrs/drei?tab=readme-ov-file#lightformer
+           */}
+          <Lightformer
+            form="rect"
+            intensity={1}
+            position={[-1, 0, -10]}
+            scale={10}
+            color={"#495057"}
+          />
+          <Lightformer
+            form="rect"
+            intensity={2}
+            position={[-10, 2, 1]}
+            scale={10}
+            rotation-y={Math.PI / 2}
+          />
+          <Lightformer
+            form="rect"
+            intensity={10}
+            position={[10, 0, 1]}
+            scale={10}
+            rotation-y={Math.PI / 2}
+          />
+        </group>
+      </Environment>
+
+      {/**
+       * @description spotLight is used to create a light source positioned at a specific point
+       * in the scene that emits light in a specific direction.
+       * https://threejs.org/docs/#api/en/lights/SpotLight
+       */}
+      <spotLight
+        position={[-2, 10, 5]}
+        angle={0.15}
+        penumbra={1} // the penumbra is the soft edge of a shadow cast by a point light
+        decay={0} // the amount the light dims as it moves away from the source
+        intensity={Math.PI * 0.2} // the light intensity
+        color={"#f8f9fa"}
+      />
+      <spotLight
+        position={[0, -25, 10]}
+        angle={0.15}
+        penumbra={1}
+        decay={0}
+        intensity={Math.PI * 0.2}
+        color={"#f8f9fa"}
+      />
+      <spotLight
+        position={[0, 15, 5]}
+        angle={0.15}
+        penumbra={1}
+        decay={0.1}
+        intensity={Math.PI * 3}
+      />
+    </group>
+  );
+};

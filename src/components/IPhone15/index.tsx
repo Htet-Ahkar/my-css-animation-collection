@@ -10,7 +10,13 @@ import * as THREE from "three";
 import React, { useEffect } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 
-export default function Index({ scale, item, size }: any) {
+type PropsType = {
+  scale: any;
+  item: any;
+  size: any;
+};
+
+export default function Index({ scale, item, size }: PropsType) {
   const { nodes, materials }: any = useGLTF("/models/scene.glb");
   const props = {
     scale,
