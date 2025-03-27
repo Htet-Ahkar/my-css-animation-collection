@@ -3,7 +3,7 @@ import { IPhoneModel } from "@/components";
 export default function Page() {
   return (
     <>
-      <section className="text-white">
+      <section className="size-full text-white">
         <IPhoneModel />
       </section>
     </>

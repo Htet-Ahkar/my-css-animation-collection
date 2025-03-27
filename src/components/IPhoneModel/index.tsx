@@ -50,10 +50,6 @@ export default function Index() {
     }
   }, [size]);
 
-  useGSAP(() => {
-    gsap.to("#heading", { y: 0, opacity: 1 });
-  }, []);
-
   // Because Next.js uses server-side rendering (SSR) by default. You need to ensure this code runs only on the client-side.
   const [eventSource, setEventSource] = useState<HTMLElement | null>(null);
   useEffect(() => {
@@ -61,13 +57,9 @@ export default function Index() {
   }, []);
 
   return (
-    <section className="common-padding">
+    <section className="p-5">
       <div className="screen-max-width">
-        <h1 id="heading" className="section-heading">
-          Take a closer look.
-        </h1>
-
-        <div className="mt-5 flex flex-col items-center">
+        <div className="flex flex-col items-center">
           <div className="relative h-[75vh] w-full overflow-hidden md:h-[90vh]">
             <ModelView
               index={1}
@@ -105,6 +97,7 @@ export default function Index() {
             </Canvas>
           </div>
 
+          {/* Controls */}
           <div className="mx-auto w-full">
             <p className="mb-5 text-center text-sm font-light">{model.title}</p>
 
