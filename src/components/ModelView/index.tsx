@@ -12,7 +12,7 @@ import { Suspense } from "react";
 type PropsType = {
   children: any;
   index: number;
-  position: string;
+  style: string;
   name: string;
   groupRef: any;
   controlRef: any;
@@ -24,7 +24,7 @@ type PropsType = {
 export default function Index({
   children,
   index,
-  position,
+  style,
   name,
   groupRef,
   controlRef,
@@ -33,7 +33,7 @@ export default function Index({
   Lights,
 }: PropsType) {
   return (
-    <View index={index} id={name} className={`absolute size-full ${position}`}>
+    <View index={index} id={name} className={`absolute size-full ${style}`}>
       {/* Ambient Light */}
       <ambientLight intensity={0.3} />
 

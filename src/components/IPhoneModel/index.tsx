@@ -60,7 +60,7 @@ export default function Index() {
           <ModelView
             index={1}
             name="small"
-            position={""}
+            style={""}
             groupRef={small}
             controlRef={cameraControlSmall}
             setRotationState={setSmallRotation}
@@ -73,7 +73,7 @@ export default function Index() {
           <ModelView
             index={2}
             name="large"
-            position={"-right-full"}
+            style={"-right-full"}
             groupRef={large}
             controlRef={cameraControlLarge}
             setRotationState={setLargeRotation}

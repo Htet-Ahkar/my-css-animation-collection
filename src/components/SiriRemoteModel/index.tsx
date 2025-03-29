@@ -49,7 +49,8 @@ export default function Index() {
 
   // Track Progress
   const [rotation, setRotation] = useState(0);
-  const containerRef = useRef(null);
+  const containerRef: any = useRef(null);
+  const [isSiriSection, setIsSiriSection] = useState(false);
 
   useEffect(() => {
     const scrollTriggerInstance = ScrollTrigger.create({
@@ -59,8 +60,8 @@ export default function Index() {
       scrub: true,
       onUpdate: (self) => {
         const progress = self.progress;
+        const tl = gsap.timeline();
 
-        // Map progress from range [0.4, 0.6] to [0, -0.7]
         const rotationY = calculateRotation({
           progress,
           start: 0.45,
@@ -69,9 +70,51 @@ export default function Index() {
           to: -0.5692,
         });
 
-        gsap.to(modelRef.current.rotation, {
+        setIsSiriSection(progress > 0.8);
+
+        tl.to(modelRef.current.rotation, {
           y: rotationY,
           duration: 0.2, // Smooth updates
+          ease: "linear",
+        });
+      },
+    });
+
+    const scrollTriggerInstance1 = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top bottom", // When the top of the element hits the bottom of the viewport
+      end: "bottom top", // When the bottom of the element hits the top of the viewport
+      scrub: true,
+      onUpdate: () => {
+        const rect = containerRef.current?.getBoundingClientRect()!;
+        const viewportHeight = window.innerHeight;
+
+        // Convert top position to a percentage of viewport height
+        const topPercentage = ((1 - rect.top / viewportHeight) * 100).toFixed(
+          2,
+        );
+
+        // Clamp the value between 0 and 50
+        const clampedTopPercentage = Math.min(
+          50,
+          Math.max(0, Number(topPercentage)),
+        );
+
+        // Map percentage (0% to 50%) to scale range (225 to 200)
+        const scaleValue = gsap.utils.mapRange(
+          0,
+          50,
+          1.2,
+          1,
+          clampedTopPercentage,
+        );
+
+        // Apply scale to modelRef (assuming it's a 3D object with a scale property)
+        gsap.to(modelRef.current.scale, {
+          x: scaleValue,
+          y: scaleValue,
+          z: scaleValue,
+          duration: 0.1, // Smooth updates
           ease: "linear",
         });
       },
@@ -80,24 +123,20 @@ export default function Index() {
     // Cleanup function to kill ScrollTrigger instance on unmount
     return () => {
       scrollTriggerInstance.kill();
+      scrollTriggerInstance1.kill();
     };
   }, []);
 
-  // useEffect(() => {
-  //   console.log(rotation);
-  // }, [rotation]);
-
   return (
     <>
-      <div
-        ref={containerRef}
-        className="screen-max-width relative h-[300vh] p-10"
-      >
-        <div className="fixed-center h-screen w-1/2 -translate-y-0">
+      <div ref={containerRef} className="screen-max-width relative h-[300vh]">
+        <div
+          className={`sticky top-[100px] h-screen w-1/2 transition-all ${isSiriSection ? "left-1/10" : "left-1/4"}`}
+        >
           <ModelView
             index={1}
-            name="small"
-            position={""}
+            name="tv-remote"
+            style={"top-[55%] scale-200"}
             groupRef={modelRef}
             controlRef={cameraControlSmall}
             setRotationState={setRotation}
