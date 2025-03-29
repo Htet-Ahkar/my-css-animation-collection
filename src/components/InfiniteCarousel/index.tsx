@@ -20,7 +20,11 @@ const SLOW_DURATION = 250;
 
 export default function Index() {
   return (
-    <RiverCarousel FAST_DURATION={FAST_DURATION} SLOW_DURATION={SLOW_DURATION}>
+    <RiverCarousel
+      FAST_DURATION={FAST_DURATION}
+      SLOW_DURATION={SLOW_DURATION}
+      isPaused={false}
+    >
       {[...images, ...images].map((item, idx) => (
         <Card image={`${item}`} key={idx} />
       ))}
