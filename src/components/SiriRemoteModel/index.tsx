@@ -2,7 +2,7 @@
 import * as THREE from "three";
 import gsap from "gsap";
 import { Canvas } from "@react-three/fiber";
-import { IPhone15, ModelView, SiriRemote } from "..";
+import { ModelView, SiriRemote } from "..";
 import { View } from "@react-three/drei";
 import { useEffect, useRef, useState } from "react";
 import { yellowImg } from "@/utils";
@@ -50,6 +50,7 @@ export default function Index() {
   // Track Progress
   const [rotation, setRotation] = useState(0);
   const containerRef: any = useRef(null);
+  const [containerProgress, setContainerProgress] = useState(0);
   const [isSiriSection, setIsSiriSection] = useState(false);
 
   useEffect(() => {
@@ -60,21 +61,23 @@ export default function Index() {
       scrub: true,
       onUpdate: (self) => {
         const progress = self.progress;
+        setContainerProgress(progress);
+
         const tl = gsap.timeline();
 
         const rotationY = calculateRotation({
           progress,
-          start: 0.45,
-          end: 0.55,
+          start: 0.3,
+          end: 0.4,
           from: 0,
           to: -0.5692,
         });
 
-        setIsSiriSection(progress > 0.8);
+        setIsSiriSection(progress > 0.7);
 
         tl.to(modelRef.current.rotation, {
           y: rotationY,
-          duration: 0.2, // Smooth updates
+          duration: 0.1,
           ease: "linear",
         });
       },
@@ -82,40 +85,48 @@ export default function Index() {
 
     const scrollTriggerInstance1 = ScrollTrigger.create({
       trigger: containerRef.current,
-      start: "top bottom", // When the top of the element hits the bottom of the viewport
-      end: "bottom top", // When the bottom of the element hits the top of the viewport
+      start: "top bottom",
+      end: "bottom top",
       scrub: true,
       onUpdate: () => {
-        const rect = containerRef.current?.getBoundingClientRect()!;
+        const rect = containerRef.current?.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
 
-        // Convert top position to a percentage of viewport height
+        if (!rect) return;
+
         const topPercentage = ((1 - rect.top / viewportHeight) * 100).toFixed(
           2,
         );
-
-        // Clamp the value between 0 and 50
+        const clampValue = 150;
         const clampedTopPercentage = Math.min(
-          50,
+          clampValue,
           Math.max(0, Number(topPercentage)),
         );
 
-        // Map percentage (0% to 50%) to scale range (225 to 200)
         const scaleValue = gsap.utils.mapRange(
           0,
-          50,
+          clampValue,
           1.2,
           1,
           clampedTopPercentage,
         );
+        const positionYValue = gsap.utils.mapRange(
+          0,
+          clampValue,
+          -0.3,
+          0,
+          clampedTopPercentage,
+        );
 
-        // Apply scale to modelRef (assuming it's a 3D object with a scale property)
         gsap.to(modelRef.current.scale, {
           x: scaleValue,
           y: scaleValue,
           z: scaleValue,
-          duration: 0.1, // Smooth updates
+          duration: 0.1,
           ease: "linear",
+          onUpdate: () => {
+            modelRef.current.position.y = positionYValue;
+          },
         });
       },
     });
@@ -129,22 +140,22 @@ export default function Index() {
 
   return (
     <>
-      <div ref={containerRef} className="screen-max-width relative h-[300vh]">
+      <div ref={containerRef} className="screen-max-width relative h-[350vh]">
+        {/* Model */}
         <div
-          className={`sticky top-[100px] h-screen w-1/2 transition-all ${isSiriSection ? "left-1/10" : "left-1/4"}`}
+          className={`sticky top-[150px] h-screen w-1/2 transition-all ${isSiriSection ? "left-1/10" : "left-1/4"}`}
         >
           <ModelView
             index={1}
             name="tv-remote"
-            style={"top-[55%] scale-200"}
+            style={"origin-top scale-190"}
             groupRef={modelRef}
             controlRef={cameraControlSmall}
             setRotationState={setRotation}
             OrbitControlsEnable={false}
             Lights={Lights}
           >
-            {/* <IPhone15 scale={[15, 15, 15]} item={model} size="small" /> */}
-            <SiriRemote scale={[4, 4, 4]} item={model} size="normal" />
+            <SiriRemote scale={[4.3, 4.3, 4.3]} item={model} size="normal" />
           </ModelView>
 
           <Canvas
@@ -161,6 +172,12 @@ export default function Index() {
             <View.Port />
           </Canvas>
         </div>
+
+        {/* Text */}
+        <Text containerProgress={containerProgress} />
+
+        {/* Siri Text */}
+        <SiriText />
       </div>
     </>
   );
@@ -235,5 +252,193 @@ const Lights = () => {
         intensity={Math.PI * 3}
       />
     </group>
+  );
+};
+
+const Text = ({ containerProgress }: any) => {
+  return (
+    <div
+      className={`normal-transition absolute top-[100vh] left-1/2 w-[245px] translate-x-[100%] space-y-44 text-[21px] font-semibold text-gray-500 ${containerProgress > 0.2 ? "opacity-100" : "opacity-0"}`}
+    >
+      <p
+        className={`normal-transition ${containerProgress > 0.4 ? "opacity-20" : "opacity-100"}`}
+      >
+        <span className="text-black">A touch-enabled clickpad.</span> Easily
+        swipe through episodes, scenes, or frames with an intuitive circular
+        movement. Turn your TV on or off, change the input to Apple TV 4K, and
+        control the volume.
+      </p>
+
+      <p
+        className={`normal-transition ${
+          containerProgress > 0.6
+            ? "opacity-20"
+            : containerProgress > 0.4
+              ? "opacity-100"
+              : "opacity-0"
+        }`}
+      >
+        <span className="text-black">
+          A dedicated Siri button — just like iPhone.
+        </span>
+        Siri delivers quick and clear ways to interact with your requests right
+        on the screen — and with voice recognition for up to six family members,
+        Siri lets Apple TV 4K know who's talking and reply with recommendations
+        tailored just for them.
+        <sup className="align-super text-xs">
+          <a href="">15</a>
+        </sup>
+      </p>
+    </div>
+  );
+};
+
+interface SiriTextProps {
+  containerProgress: number;
+}
+
+const SiriText = () => {
+  const textData = [
+    {
+      utterance: ["What should", "I watch?"],
+      description: [
+        "Siri has personalized recommendations",
+        "based on what you've watched.",
+      ],
+    },
+    {
+      utterance: ["What did she", "just say?"],
+      description: [
+        "Rewind the scene 10 seconds, turn on",
+        "subtitles, and more.",
+      ],
+    },
+    {
+      utterance: ["How high is", "Mount Whitney?"],
+      description: [
+        "Ask questions and get answers for just",
+        "about anything.",
+      ],
+    },
+    {
+      utterance: ["Show me the", "babies' room"],
+      description: [
+        "Keep track of all your connected smart",
+        "home accessories in Control Center",
+      ],
+    },
+  ];
+
+  const ref: any = useRef(null);
+  const textRefs = useRef<HTMLDivElement[]>([]);
+  const triggerPoints = [53, 70, 88, 100];
+  const endPoints = [59, 75, 95, 120];
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const viewportHeight = window.innerHeight;
+    const OPACITY_FADE_RANGE = 30;
+    const MAX_CLAMP_VALUE = 150;
+    const VERTICAL_MOVEMENT_THRESHOLD = 90;
+    const ANIMATION_DURATION = 0.1;
+
+    const calculateViewportPercentage = (rect: any) => {
+      if (!rect) return 0;
+      return Math.min(
+        MAX_CLAMP_VALUE,
+        Math.max(0, (1 - rect.top / viewportHeight) * 100),
+      );
+    };
+
+    const calculateOpacity = (
+      percentage: number,
+      startPoint: number,
+      endPoint: number,
+    ) => {
+      if (percentage >= startPoint && percentage < endPoint) {
+        return gsap.utils.mapRange(startPoint, endPoint, 0, 1, percentage);
+      } else if (percentage >= endPoint) {
+        return gsap.utils.mapRange(
+          endPoint,
+          endPoint + OPACITY_FADE_RANGE,
+          1,
+          0.5,
+          percentage,
+        );
+      }
+      return 0;
+    };
+
+    const calculateVerticalPosition = (percentage: number) => {
+      if (percentage <= VERTICAL_MOVEMENT_THRESHOLD) return 0;
+      return gsap.utils.mapRange(
+        VERTICAL_MOVEMENT_THRESHOLD,
+        MAX_CLAMP_VALUE,
+        0,
+        -100,
+        percentage,
+      );
+    };
+
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: ref.current,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: true,
+      onUpdate: () => {
+        const rect = ref.current?.getBoundingClientRect();
+        const percentage = calculateViewportPercentage(rect);
+
+        textRefs.current.forEach((el, index) => {
+          const startProgress = triggerPoints[index];
+          const endProgress = endPoints[index];
+
+          const opacity = calculateOpacity(
+            percentage,
+            startProgress,
+            endProgress,
+          );
+          const yPosition = calculateVerticalPosition(percentage);
+
+          gsap.to(el, {
+            opacity,
+            y: yPosition,
+            duration: ANIMATION_DURATION,
+            ease: "linear",
+          });
+        });
+      },
+    });
+
+    return () => scrollTrigger.kill(); // Cleanup
+  }, []); // Empty dependency array to run once on mount
+
+  return (
+    <div
+      ref={ref}
+      className="absolute top-[250vh] left-1/2 h-[665px] space-y-5"
+    >
+      {textData.map((data, index) => (
+        <div
+          key={index}
+          ref={(el) => {
+            if (el) textRefs.current[index] = el;
+          }}
+          className="space-y-2 opacity-0"
+        >
+          <p className="typography-siri-utterance whitespace-pre-line">
+            {data.utterance[0]}
+            <br />
+            {data.utterance[1]}
+          </p>
+          <p className="text-[21px] font-semibold text-gray-500">
+            {data.description[0]}
+            <br />
+            {data.description[1]}
+          </p>
+        </div>
+      ))}
+    </div>
   );
 };

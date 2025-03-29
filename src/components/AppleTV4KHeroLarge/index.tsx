@@ -92,7 +92,7 @@ export default function Index() {
     <div ref={container} className={styles.container}>
       {/* play/pause btn */}
       <div
-        className={`fixed top-[90vh] z-50 flex w-full justify-end px-10 transition-all duration-500 ${isControlHidden ? "hidden opacity-0" : "block opacity-100"}`}
+        className={`normal-transition fixed top-[90vh] z-50 flex w-full justify-end px-10 ${isControlHidden ? "hidden opacity-0" : "block opacity-100"}`}
       >
         <label className="swap swap-rotate cursor-pointer rounded-full bg-gray-400 p-2 opacity-55">
           {/* this hidden checkbox controls the state */}
