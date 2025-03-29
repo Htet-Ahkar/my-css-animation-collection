@@ -3,14 +3,14 @@ import { SiriRemoteModel } from "@/components";
 export default function Page() {
   return (
     <>
-      <section className="h-[80vh] w-screen bg-gray-400" />
+      <section className="h-[60vh] w-screen" />
 
       <section className="size-full pt-52">
         <SectionText />
         <SiriRemoteModel />
       </section>
 
-      <section className="z-10 h-[80vh] w-screen bg-gray-400" />
+      <section className="glass z-10 h-[80vh] w-screen" />
     </>
   );
 }
