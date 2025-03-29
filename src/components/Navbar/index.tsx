@@ -23,8 +23,28 @@ const pages = [
     route: "/split-vignettek",
   },
   {
+    name: "Text Parallax",
+    route: "/text-parallax",
+  },
+  {
+    name: "Framer Motion Infinite Carousel",
+    route: "/framer-motion-infinite-carousel",
+  },
+  {
+    name: "IPhone 3D",
+    route: "/iphone-3d",
+  },
+  {
+    name: "Siri Remote",
+    route: "/siri-remote",
+  },
+  {
     name: "Apple tv rooms",
     route: "/apple-tv-rooms",
+  },
+  {
+    name: "Apple Tv Plus River",
+    route: "/apple-tv-plus-river",
   },
 ];
 

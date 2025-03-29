@@ -10,14 +10,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.0.5",
+    "@react-three/fiber": "^9.1.0",
     "@studio-freight/lenis": "^1.0.42",
     "framer-motion": "^12.5.0",
     "gsap": "^3.12.7",
     "lenis": "^1.2.3",
-    "next": "15.2.2",
+    "next": "^15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sass": "^1.86.0"
+    "react-use-measure": "^2.1.7",
+    "sass": "^1.86.0",
+    "three": "^0.174.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
