@@ -1,4 +1,4 @@
-import { Rooms, TvPlusRiver } from "@/components";
+import { TvPlusRiver } from "@/components";
 
 export default function Page() {
   return (

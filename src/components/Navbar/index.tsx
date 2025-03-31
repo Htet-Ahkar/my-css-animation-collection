@@ -50,6 +50,10 @@ const pages = [
     name: "Apple Tv Plus River",
     route: "/apple-tv-plus-river",
   },
+  {
+    name: "Apple Tv Performance Section",
+    route: "/apple-tv-performance-section",
+  },
 ];
 
 const Index = () => {

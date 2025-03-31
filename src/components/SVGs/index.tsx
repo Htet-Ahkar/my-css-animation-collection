@@ -18,7 +18,7 @@ export function PlayIcon() {
 
 export function ChevronRight() {
   return (
-    <svg className="swap-off size-10fill-current p-2" viewBox="0 0 24 24">
+    <svg className="size-10fill-current p-2" viewBox="0 0 24 24">
       <g
         id="SVGRepo_tracerCarrier"
         strokeLinecap="round"
@@ -33,7 +33,7 @@ export function ChevronRight() {
 
 export function ArrowUpRight() {
   return (
-    <svg className="swap-off size-10fill-current p-2" viewBox="0 0 24 24">
+    <svg className="size-10fill-current p-2" viewBox="0 0 24 24">
       <g
         id="SVGRepo_tracerCarrier"
         strokeLinecap="round"
