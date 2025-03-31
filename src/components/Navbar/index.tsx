@@ -27,6 +27,10 @@ const pages = [
     route: "/text-parallax",
   },
   {
+    name: "Sticky Footer",
+    route: "/sticky-footer",
+  },
+  {
     name: "Framer Motion Infinite Carousel",
     route: "/framer-motion-infinite-carousel",
   },
