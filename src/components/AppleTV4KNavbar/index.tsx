@@ -1,6 +1,6 @@
 const Index = () => {
   return (
-    <nav className="navbar glass sticky top-0 mt-16 border-b border-b-gray-400 p-0 text-black">
+    <nav className="navbar glass sticky top-0 mt-16 w-screen border-b border-b-gray-400 p-0 text-black">
       {/* content */}
       <div className="flex-center container-lg justify-between px-6">
         {/* left */}
