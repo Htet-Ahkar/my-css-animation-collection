@@ -1,5 +1,4 @@
 "use client";
-import { AppleTV4KNavbar } from "@/components";
 import Lenis from "lenis";
 import { useEffect } from "react";
 

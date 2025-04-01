@@ -3,6 +3,7 @@ export { default as Navbar } from "./Navbar";
 export { default as ParallaxScroll } from "./ParallaxScroll";
 export { default as ZoomParallax } from "./ZoomParallax";
 export { default as TextParallax } from "./TextParallax";
+export { default as StickyFooter } from "./StickyFooter";
 export { default as RiverCarousel } from "./RiverCarousel";
 export { default as InfiniteCarousel } from "./InfiniteCarousel";
 export { default as AppleTV4KNavbar } from "./AppleTV4KNavbar";
@@ -11,6 +12,7 @@ export { default as Gallery } from "./Gallery";
 export { default as Description } from "./Description";
 export { default as Rooms } from "./Rooms";
 export { default as TvPlusRiver } from "./TvPlusRiver";
+export { default as TvPerformance } from "./TvPerformance";
 
 // 3D Iphone
 export { default as IPhoneModel } from "./IPhoneModel";

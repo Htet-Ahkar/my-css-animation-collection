@@ -19,6 +19,7 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { PauseIcon, PlayIcon } from "../SVGs";
 
 export default function Index() {
   const container = useRef(null);
@@ -94,38 +95,7 @@ export default function Index() {
       <div
         className={`normal-transition fixed top-[90vh] z-50 flex w-full justify-end px-10 ${isControlHidden ? "hidden opacity-0" : "block opacity-100"}`}
       >
-        <label className="swap swap-rotate cursor-pointer rounded-full bg-gray-400 p-2 opacity-55">
-          {/* this hidden checkbox controls the state */}
-          <input
-            type="checkbox"
-            checked={isPlaying}
-            onChange={handleCheckboxChange}
-          />
-
-          {/* pause icon */}
-
-          <svg
-            className="swap-on h-10 w-10 fill-current p-2.5"
-            viewBox="0 0 256 256"
-          >
-            <path d="M216,48V208a16.01833,16.01833,0,0,1-16,16H164a16.01833,16.01833,0,0,1-16-16V48a16.01833,16.01833,0,0,1,16-16h36A16.01833,16.01833,0,0,1,216,48ZM92,32H56A16.01833,16.01833,0,0,0,40,48V208a16.01833,16.01833,0,0,0,16,16H92a16.01833,16.01833,0,0,0,16-16V48A16.01833,16.01833,0,0,0,92,32Z"></path>
-          </svg>
-
-          {/* play icon */}
-
-          <svg
-            className="swap-off h-10 w-10 fill-current p-2.5"
-            viewBox="-5 0 28 28"
-          >
-            <g
-              id="Icon-Set-Filled"
-              transform="translate(-419.000000, -571.000000)"
-              fill="#000000"
-            >
-              <path d="M440.415,583.554 L421.418,571.311 C420.291,570.704 419,570.767 419,572.946 L419,597.054 C419,599.046 420.385,599.36 421.418,598.689 L440.415,586.446 C441.197,585.647 441.197,584.353 440.415,583.554"></path>
-            </g>
-          </svg>
-        </label>
+        <TvControl isPlaying={isPlaying} onDataChange={handleCheckboxChange} />
       </div>
 
       <div className={styles.sticky}>
@@ -164,7 +134,6 @@ export default function Index() {
                 </h1>
               </div>
 
-              {/* TODO */}
               {/* vido title */}
               <div className="mt-[6vh] text-white">
                 {currentMessage && currentMessage.component}
@@ -253,6 +222,51 @@ export default function Index() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+function TvControl({
+  onDataChange,
+
+  isPlaying,
+}: {
+  onDataChange: (value: boolean) => void;
+  isPlaying: boolean;
+}) {
+  const handleCheckboxChange = () => {
+    onDataChange(!isPlaying);
+  };
+
+  useEffect(() => {
+    const videoElements =
+      document.querySelectorAll<HTMLVideoElement>("#apple-tv-video");
+
+    videoElements.forEach((video) => {
+      if (isPlaying) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+  }, [isPlaying]);
+
+  return (
+    <>
+      <label className="swap swap-rotate cursor-pointer rounded-full bg-gray-400 p-2 opacity-55">
+        {/* this hidden checkbox controls the state */}
+        <input
+          type="checkbox"
+          checked={isPlaying}
+          onChange={handleCheckboxChange}
+        />
+
+        {/* pause icon */}
+        <PauseIcon />
+
+        {/* play icon */}
+        <PlayIcon />
+      </label>
+    </>
   );
 }
 
