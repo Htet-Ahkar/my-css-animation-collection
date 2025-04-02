@@ -1,4 +1,4 @@
-import { AppleTV4KHeroLarge, TvPerformance } from "@/components";
+import { TvPerformance } from "@/components";
 
 export default function Page() {
   return (
@@ -12,7 +12,6 @@ export default function Page() {
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
         <TvPerformance />
-        {/* <AppleTV4KHeroLarge /> */}
       </section>
 
       <section className="screen flex-center glass bg-gray-300">
