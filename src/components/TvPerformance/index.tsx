@@ -54,7 +54,7 @@ export default function Index() {
           {/* Tv Hardware */}
           <TvHardWare>
             <motion.div
-              className="absolute top-[185%] left-1/2 z-10 flex aspect-video w-[80%] -translate-x-1/2 -translate-y-2/6 scale-150 space-x-20 text-lg leading-relaxed font-semibold text-gray-400"
+              className="absolute top-[175%] left-1/2 z-10 flex aspect-video w-[80%] -translate-x-1/2 -translate-y-2/6 scale-150 space-x-20 text-lg leading-relaxed font-semibold text-gray-400"
               style={{
                 opacity: bottomTextOpacity,
               }}
