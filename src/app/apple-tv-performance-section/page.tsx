@@ -8,7 +8,7 @@ export default function Page() {
       </section>
 
       <section
-        className="relative -mt-[100vh] size-full h-[300vh] bg-white"
+        className="relative -mt-[100vh] size-full h-[300vh] bg-white pb-[20vh]"
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
         <TvPerformance />
