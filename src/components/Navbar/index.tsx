@@ -66,7 +66,7 @@ const Index = () => {
   };
 
   return (
-    <header className="bg-neutral text-neutral-content flex-center absolute top-0 h-16 w-full p-3">
+    <header className="bg-neutral text-neutral-content flex-center absolute top-0 h-16 w-screen p-3">
       <nav>
         {/* Select */}
         <select
