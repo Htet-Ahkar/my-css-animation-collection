@@ -1,0 +1,26 @@
+.fitnessPlus {
+  background: radial-gradient(at top right, #0ae8b5, #00bb53);
+}
+
+.music {
+  background: radial-gradient(at top right, #796bf2, #572f91);
+}
+
+.arcade {
+  background: radial-gradient(at top right, #ea6037, #d62c3f);
+}
+
+.photo {
+  background: #f5f5f7;
+}
+
+.roomTypography {
+  font-size: 21px;
+  line-height: 25px;
+  font-weight: 600;
+  color: oklch(0.707 0.022 261.325); //color-gray-400
+  span {
+    color: black;
+    margin-right: 0.25rem;
+  }
+}

@@ -15,8 +15,44 @@ const pages = [
     route: "/zoom-parallax",
   },
   {
-    name: "Apple TV 4K",
-    route: "/appletv-4k",
+    name: "Apple TV 4K Hero Section",
+    route: "/appletv-4k-hero",
+  },
+  {
+    name: "Split Vignette",
+    route: "/split-vignettek",
+  },
+  {
+    name: "Text Parallax",
+    route: "/text-parallax",
+  },
+  {
+    name: "Sticky Footer",
+    route: "/sticky-footer",
+  },
+  {
+    name: "Framer Motion Infinite Carousel",
+    route: "/framer-motion-infinite-carousel",
+  },
+  {
+    name: "IPhone 3D",
+    route: "/iphone-3d",
+  },
+  {
+    name: "Siri Remote",
+    route: "/siri-remote",
+  },
+  {
+    name: "Apple tv rooms",
+    route: "/apple-tv-rooms",
+  },
+  {
+    name: "Apple Tv Plus River",
+    route: "/apple-tv-plus-river",
+  },
+  {
+    name: "Apple Tv Performance Section",
+    route: "/apple-tv-performance-section",
   },
 ];
 
@@ -30,7 +66,7 @@ const Index = () => {
   };
 
   return (
-    <header className="bg-neutral text-neutral-content flex-center absolute top-0 h-16 w-full p-3">
+    <header className="bg-neutral text-neutral-content flex-center absolute top-0 h-16 w-screen p-3">
       <nav>
         {/* Select */}
         <select

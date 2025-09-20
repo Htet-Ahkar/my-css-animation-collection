@@ -5,11 +5,11 @@ import StaticFrame from "@/../public/medias/appleTv-4k/hero_staticframe__large_2
 import AppleTv from "@/../public/medias/appleTv-4k/hero_tv_remote_large.png";
 import TV from "@/../public/medias/appleTv-4k/hero_tv_hw_large_2x.jpg";
 import TVShadow from "@/../public/medias/appleTv-4k/hero_tv_shadow_color_large.png";
-import styles from "@/styles/appletv-4k.module.scss";
 import Music from "@/../public/medias/appleTv-4k/logo_apple_music_large.svg";
 import Fitness from "@/../public/medias/appleTv-4k/logo_apple_fitnessplus_large.svg";
 import TvPlus from "@/../public/medias/appleTv-4k/logo_apple_tvplus_large.svg";
 import Arcade from "@/../public/medias/appleTv-4k/logo_apple_arcade_large.svg";
+import styles from "./style.module.scss";
 
 import {
   useScroll,
@@ -19,6 +19,7 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { PauseIcon, PlayIcon } from "../SVGs";
 
 export default function Index() {
   const container = useRef(null);
@@ -26,7 +27,6 @@ export default function Index() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isTvStatic, setIsTvStatic] = useState(false);
   const [isControlHidden, setIsControlHidden] = useState(false);
-  const [isTvShadowVisible, setIsTvShadowVisible] = useState(false);
   const [currentVidoFrame, setCurrentVidoFrame] = useState(0);
   const FPS = 30;
 
@@ -35,14 +35,14 @@ export default function Index() {
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [1, 0], [1, 1.38]);
-  const scale1 = useTransform(scrollYProgress, [1, 0], [1, 2]);
-  const opacity = useTransform(scrollYProgress, [0.01, 0], [0, 1]);
+  const tvScale = useTransform(scrollYProgress, [1, 0], [1, 1.5]);
+  const appleTvscale = useTransform(scrollYProgress, [1, 0], [1, 2]);
+  const heroOpacity = useTransform(scrollYProgress, [0.01, 0], [0, 1]);
+  const tvShadowOpacity = useTransform(scrollYProgress, [0.6, 0.2], [1, 0]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsControlHidden(latest > 80);
     setIsTvStatic(latest > 150);
-    setIsTvShadowVisible(latest > 850);
   });
 
   const handleCheckboxChange = () => {
@@ -73,7 +73,7 @@ export default function Index() {
     return () => cancelAnimationFrame(animationFrameId);
   }, [currentVidoFrame, FPS]);
 
-  // Define your sequential messages
+  // Sequential messages
   const messages = [
     { frame: 0, component: <LootTitle /> },
     { frame: 85, component: <TedTitle /> },
@@ -93,62 +93,31 @@ export default function Index() {
     <div ref={container} className={styles.container}>
       {/* play/pause btn */}
       <div
-        className={`fixed top-[90vh] z-50 flex w-full justify-end px-10 transition-all duration-500 ${isControlHidden ? "hidden opacity-0" : "block opacity-100"}`}
+        className={`normal-transition fixed top-[90vh] z-50 flex w-full justify-end px-10 ${isControlHidden ? "hidden opacity-0" : "block opacity-100"}`}
       >
-        <label className="swap swap-rotate cursor-pointer rounded-full bg-gray-400 p-2 opacity-55">
-          {/* this hidden checkbox controls the state */}
-          <input
-            type="checkbox"
-            checked={isPlaying}
-            onChange={handleCheckboxChange}
-          />
-
-          {/* pause icon */}
-
-          <svg
-            className="swap-on h-10 w-10 fill-current p-2.5"
-            viewBox="0 0 256 256"
-          >
-            <path d="M216,48V208a16.01833,16.01833,0,0,1-16,16H164a16.01833,16.01833,0,0,1-16-16V48a16.01833,16.01833,0,0,1,16-16h36A16.01833,16.01833,0,0,1,216,48ZM92,32H56A16.01833,16.01833,0,0,0,40,48V208a16.01833,16.01833,0,0,0,16,16H92a16.01833,16.01833,0,0,0,16-16V48A16.01833,16.01833,0,0,0,92,32Z"></path>
-          </svg>
-
-          {/* play icon */}
-
-          <svg
-            className="swap-off h-10 w-10 fill-current p-2.5"
-            viewBox="-5 0 28 28"
-          >
-            <g
-              id="Icon-Set-Filled"
-              transform="translate(-419.000000, -571.000000)"
-              fill="#000000"
-            >
-              <path d="M440.415,583.554 L421.418,571.311 C420.291,570.704 419,570.767 419,572.946 L419,597.054 C419,599.046 420.385,599.36 421.418,598.689 L440.415,586.446 C441.197,585.647 441.197,584.353 440.415,583.554"></path>
-            </g>
-          </svg>
-        </label>
+        <TvControl isPlaying={isPlaying} onDataChange={handleCheckboxChange} />
       </div>
 
       <div className={styles.sticky}>
         {/* tv set */}
         <motion.div
           style={{
-            scale,
+            scale: tvScale,
           }}
           className={styles.el}
         >
-          <div className={`${styles.contentContainer} `}>
+          <div className={`${styles.contentContainer} !aspect-video`}>
             {/* Hero Container */}
             <motion.div
               className="flex-center absolute bottom-0 left-0 z-30 h-1/2 w-full flex-col"
               style={{
-                opacity,
+                opacity: heroOpacity,
               }}
             >
               {/* Hero logo */}
               <div className="relative h-1/9 w-1/9">
                 <Image
-                  className="object-cover"
+                  className="object-contain"
                   alt="HeroLogo"
                   src={HeroLogo}
                   placeholder="blur"
@@ -165,7 +134,6 @@ export default function Index() {
                 </h1>
               </div>
 
-              {/* TODO */}
               {/* vido title */}
               <div className="mt-[6vh] text-white">
                 {currentMessage && currentMessage.component}
@@ -216,8 +184,11 @@ export default function Index() {
             </div>
 
             {/* TV Shadow */}
-            <div
-              className={`absolute left-[-17vh] h-[10vh] w-[170vh] transition-all duration-1000 ${isTvShadowVisible ? "opacity-100" : "opacity-0"}`}
+            <motion.div
+              className={`absolute left-[-15vh] h-[10vh] w-[155vh]`}
+              style={{
+                opacity: tvShadowOpacity,
+              }}
             >
               <Image
                 className="object-fill"
@@ -228,17 +199,17 @@ export default function Index() {
                 fill
                 sizes="100%"
               />
-            </div>
+            </motion.div>
           </div>
         </motion.div>
 
         {/* apple tv */}
-        <motion.div style={{ scale: scale1 }} className={styles.el}>
+        <motion.div style={{ scale: appleTvscale }} className={styles.el}>
           <div className={`${styles.contentContainer}`}>
             {/* Apple tv  */}
             <div className="absolute top-[2vh] left-1/2 z-10 !h-[20%] !w-[20%] -translate-x-1/2">
               <Image
-                className="object-cover"
+                className="overflow-visible object-cover"
                 alt="AppleTv"
                 src={AppleTv}
                 placeholder="blur"
@@ -251,6 +222,51 @@ export default function Index() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+function TvControl({
+  onDataChange,
+
+  isPlaying,
+}: {
+  onDataChange: (value: boolean) => void;
+  isPlaying: boolean;
+}) {
+  const handleCheckboxChange = () => {
+    onDataChange(!isPlaying);
+  };
+
+  useEffect(() => {
+    const videoElements =
+      document.querySelectorAll<HTMLVideoElement>("#apple-tv-video");
+
+    videoElements.forEach((video) => {
+      if (isPlaying) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+  }, [isPlaying]);
+
+  return (
+    <>
+      <label className="swap swap-rotate cursor-pointer rounded-full bg-gray-400 p-2 opacity-55">
+        {/* this hidden checkbox controls the state */}
+        <input
+          type="checkbox"
+          checked={isPlaying}
+          onChange={handleCheckboxChange}
+        />
+
+        {/* pause icon */}
+        <PauseIcon />
+
+        {/* play icon */}
+        <PlayIcon />
+      </label>
+    </>
   );
 }
 
@@ -342,7 +358,7 @@ function HelloKittyTitle() {
   return (
     <div className="flex-center space-x-4">
       {/* logo */}
-      <div className="relative h-[4vh] w-[4vw]">
+      <div className="relative h-[5vh] w-[5vw]">
         <Image
           className="object-contain"
           alt="Arcade"
@@ -364,36 +380,11 @@ function HelloKittyTitle() {
   );
 }
 
-function FittnessTitle() {
-  return (
-    <div className="flex-center space-x-4">
-      {/* logo */}
-      <div className="relative h-[4vh] w-[4vw]">
-        <Image
-          className="object-contain"
-          alt="Fitness"
-          src={Fitness}
-          quality={100}
-          fill
-          sizes="100%"
-        />
-      </div>
-
-      {/* divider */}
-      <div className="h-[3vh] border border-white" />
-
-      {/* Title */}
-      <div className="text-lg">
-        <a href="#">HIIT with Bakari</a>
-      </div>
-    </div>
-  );
-}
 function MusicTitle() {
   return (
     <div className="flex-center space-x-4">
       {/* logo */}
-      <div className="relative h-[4vh] w-[4vw]">
+      <div className="relative h-[6vh] w-[6vw]">
         <Image
           className="object-contain"
           alt="Music"
@@ -410,6 +401,32 @@ function MusicTitle() {
       {/* Title */}
       <div className="text-lg">
         <a href="#">Peggy Gou</a>
+      </div>
+    </div>
+  );
+}
+
+function FittnessTitle() {
+  return (
+    <div className="flex-center space-x-4">
+      {/* logo */}
+      <div className="relative h-[6vh] w-[6vw]">
+        <Image
+          className="object-contain"
+          alt="Fitness"
+          src={Fitness}
+          quality={100}
+          fill
+          sizes="100%"
+        />
+      </div>
+
+      {/* divider */}
+      <div className="h-[3vh] border border-white" />
+
+      {/* Title */}
+      <div className="text-lg">
+        <a href="#">HIIT with Bakari</a>
       </div>
     </div>
   );

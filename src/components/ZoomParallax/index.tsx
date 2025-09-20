@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/styles/zoom-parallax.module.scss";
+import styles from "./style.module.scss";
 import Picture1 from "@/../public/medias/zoom-parallax/1.jpeg";
 import Picture2 from "@/../public/medias/zoom-parallax/2.jpeg";
 import Picture3 from "@/../public/medias/zoom-parallax/3.jpg";
@@ -63,7 +63,7 @@ export default function Index() {
           return (
             <motion.div key={index} style={{ scale }} className={styles.el}>
               <div className={styles.imageContainer}>
-                <Image src={src} fill alt="image" placeholder="blur" />
+                <Image src={src} alt="image" placeholder="blur" />
               </div>
             </motion.div>
           );

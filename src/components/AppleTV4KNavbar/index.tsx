@@ -1,16 +1,16 @@
 const Index = () => {
   return (
-    <nav className="navbar glass b text-blac sticky top-0 mt-16 border-b border-b-gray-400 p-0 text-black">
+    <nav className="navbar glass sticky top-0 mt-16 w-screen border-b border-b-gray-400 p-0 text-black">
       {/* content */}
-      <div className="flex-center w-full justify-between px-10">
+      <div className="flex-center container-lg justify-between px-6">
         {/* left */}
         {/* title */}
-        <div className="text-3xl font-semibold">
+        <div className="text-xl font-semibold">
           <a href="">Apple TV 4K</a>
         </div>
 
         {/* right */}
-        <div className="flex-center space-x-5">
+        <div className="flex-center space-x-5 text-xs">
           {/* menu */}
           <ul className="flex-center space-x-4">
             <li className="relative cursor-pointer transition-all hover:opacity-75">
@@ -24,7 +24,7 @@ const Index = () => {
 
           {/* buttom */}
           <div>
-            <button className="btn btn-primary rounded-full text-lg font-light">
+            <button className="btn btn-primary rounded-full font-light">
               <a href="">Buy</a>
             </button>
           </div>

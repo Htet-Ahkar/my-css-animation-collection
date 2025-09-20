@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@tailwind utilities;
 
 @plugin "daisyui" {
   themes: frjuggly --default --prefersdark;
@@ -82,10 +83,61 @@ nav {
   @apply z-30;
 }
 
+canvas {
+  touch-action: none;
+}
+
+.screen-max-width {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  position: relative;
+  max-width: 1120px;
+}
+
+@utility normal-transition {
+  @apply transition-all duration-300;
+}
+
+@utility typography-siri-utterance {
+  @apply bg-gradient-to-r from-[#f45f7f] via-[#887af7] to-[#0ecdfd] bg-clip-text text-[44px] leading-[2.75rem] font-semibold tracking-normal text-transparent;
+}
+
 @utility flex-center {
   @apply flex items-center justify-center;
 }
 
+@utility flex-col-center {
+  @apply flex flex-col items-center justify-center;
+}
+
+@utility fixed-center {
+  @apply fixed top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2;
+}
+
 @utility screen {
   @apply min-h-screen min-w-screen;
+}
+
+@utility vignette-container {
+  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
+}
+
+@utility container-lg {
+  @apply m-auto h-full w-[980px];
+}
+
+@utility room-tv-hardware-size {
+  @apply h-[115%] w-[109%];
+}
+
+@utility color-container {
+  @apply flex items-center justify-center rounded-full bg-gray-300 px-4 py-4 backdrop-blur;
+}
+
+@utility size-btn-container {
+  @apply ml-3 flex items-center justify-center gap-1 rounded-full bg-gray-300 p-1 backdrop-blur;
+}
+
+@utility size-btn {
+  @apply flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm text-black transition-all;
 }
